@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Jedi 15</string>
+
+    <string name="hello_world">Hola mundo!</string>
+    <string name="action_settings">Herramientas</string>
+    <string name="usuario_tag">Usuario:</string>
+    <string name="contraseña_tag">Contraseña:</string>
+    <string name="title_activity_menu">MenuActivity</string>
+</resources>
