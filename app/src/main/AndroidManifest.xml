@@ -22,7 +22,8 @@
         </activity>
         <activity
             android:name=".CalculadoraActivity"
-            android:label="@string/title_activity_calculadora" >
+            android:label="@string/title_activity_calculadora"
+            >
         </activity>
     </application>
 

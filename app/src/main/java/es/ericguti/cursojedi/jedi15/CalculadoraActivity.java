@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
             case 3: x /= y; break;
             case 4: x *= y; break;
         }
+        y = 0;
     }
 
     @Override
@@ -71,8 +73,8 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
             case R.id.imageView25: //sum
                 if(primer) primer = false;
                 else operation();
-                result.setText(String.valueOf(x));
                 op = 1;
+                result.setText(String.valueOf(x));
                 break;
             case R.id.imageView27: //sub
                 if(primer) primer = false;
@@ -100,6 +102,7 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
                 primer = true;
                 x = 0;
                 y = 0;
+                result.setText(String.valueOf(x));
                 break;
         }
     }
