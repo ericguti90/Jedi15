@@ -1,17 +1,27 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 
-public class MenuActivity extends ActionBarActivity {
+public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
+    @Override
+    public void onClick(View v){
+        Intent intent = new Intent(getApplicationContext(), CalculadoraActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        ImageView calc = (ImageView) findViewById(R.id.imageView10);
+        calc.setOnClickListener(this);
     }
 
     @Override

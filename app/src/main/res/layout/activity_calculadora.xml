@@ -27,7 +27,9 @@
         android:layout_alignParentEnd="true"
         android:gravity="center"
         android:textColor="#ff81e4fd"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:editable="true"
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="horizontal"
