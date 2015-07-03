@@ -52,7 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView7"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/linearLayout">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -78,7 +79,10 @@
             android:text="0"
             android:textColor="#ff007fcc"
             android:textSize="30dp"
-            android:id="@+id/textView9" />
+            android:id="@+id/textView9"
+            android:editable="true"
+            android:elegantTextHeight="false"
+            android:enabled="false" />
     </LinearLayout>
 
     <ImageView
@@ -86,6 +90,19 @@
         android:layout_height="150dp"
         android:id="@+id/imageView51"
         android:layout_alignTop="@+id/imageView49"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/icon_perfil_back"
+        android:clickable="true" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/imageView52"
+        android:src="@drawable/add_icon"
+        android:layout_above="@+id/linearLayout"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7"
+        android:layout_marginLeft="10dp"
+        android:clickable="true" />
 
 </RelativeLayout>

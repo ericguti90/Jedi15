@@ -12,8 +12,25 @@ import android.widget.ImageView;
 public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
     @Override
     public void onClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CalculadoraActivity.class);
-        startActivity(intent);
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.imageView10:
+                intent = new Intent(getApplicationContext(), CalculadoraActivity.class);
+                break;
+            case R.id.imageView7:
+                intent = new Intent(getApplicationContext(), memoryActivity.class);
+                break;
+            case R.id.imageView8:
+                intent = new Intent(getApplicationContext(), PerfilActivity.class);
+                break;
+            case R.id.imageView9:
+                intent = new Intent(getApplicationContext(), RankingActivity.class);
+                break;
+            case R.id.imageView11:
+                intent = new Intent(getApplicationContext(), MusicActivity.class);
+                break;
+        }
+        if(!intent.equals(null))startActivity(intent);
     }
 
     @Override
@@ -21,7 +38,15 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ImageView calc = (ImageView) findViewById(R.id.imageView10);
+        ImageView game = (ImageView) findViewById(R.id.imageView7);
+        ImageView rank = (ImageView) findViewById(R.id.imageView9);
+        ImageView user = (ImageView) findViewById(R.id.imageView8);
+        ImageView play = (ImageView) findViewById(R.id.imageView11);
         calc.setOnClickListener(this);
+        game.setOnClickListener(this);
+        rank.setOnClickListener(this);
+        user.setOnClickListener(this);
+        play.setOnClickListener(this);
     }
 
     @Override
