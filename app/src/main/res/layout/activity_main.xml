@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/contraseña_tag"
+                android:text="@string/contra_tag"
                 android:id="@+id/textView3" />
 
             <EditText

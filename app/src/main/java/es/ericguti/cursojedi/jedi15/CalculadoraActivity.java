@@ -172,5 +172,23 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putDouble("x", x);
+        outState.putDouble("y", y);
+        outState.putInt("op", op);
+        outState.putBoolean("primer",primer);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        x = savedInstanceState.getDouble("x",0);
+        y = savedInstanceState.getDouble("y", 0);
+        op = savedInstanceState.getInt("op", 0);
+        primer = savedInstanceState.getBoolean("primer",true);
+        if (primer || op != 0) result.setText(String.valueOf(x));
+        else result.setText(String.valueOf(y));
+    }
 }

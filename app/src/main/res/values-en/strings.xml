@@ -3,6 +3,6 @@
     <string name="app_name">Jedi 15</string>
     <string name="action_settings">Setting</string>
     <string name="hello_world">Hello world!</string>
-    <string name="contraseña_tag">Password:</string>
+    <string name="contra_tag">Password:</string>
     <string name="usuario_tag">User:</string>
 </resources>
