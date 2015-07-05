@@ -1,5 +1,7 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,19 +17,21 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
 
 
-public class PerfilActivity extends ActionBarActivity implements View.OnClickListener{
+public class PerfilActivity extends FragmentActivity implements View.OnClickListener, AddressNotification.DialogListener{
     TextView dir;
     ImageView img;
 
@@ -65,7 +69,7 @@ public class PerfilActivity extends ActionBarActivity implements View.OnClickLis
     }
 
 
-    public static Bitmap getRoundedCornerBitmap( Drawable drawable, boolean square) {
+    /*public static Bitmap getRoundedCornerBitmap( Drawable drawable, boolean square) {
         int width = 0;
         int height = 0;
 
@@ -102,7 +106,7 @@ public class PerfilActivity extends ActionBarActivity implements View.OnClickLis
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -115,8 +119,21 @@ public class PerfilActivity extends ActionBarActivity implements View.OnClickLis
                 //FragmentManager fragmentManager = getFragmentManager();
                 AddressNotification dialogo = new AddressNotification();
                 dialogo.show(getFragmentManager(),"dialog");
+
                 break;
         }
+    }
+
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // User pressed OK, so we need to grab the values from the
+        // dialog's fields and apply them to the Views in the Main
+        // Activity
+
+        // Start with the payment amount
+        Dialog dialogView = dialog.getDialog();
+        EditText eText = (EditText) dialogView.findViewById(R.id.editText3);
+        TextView text = (TextView) findViewById(R.id.textView7);
+        text.setText(eText.getText());
     }
 
     @Override

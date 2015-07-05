@@ -6,4 +6,5 @@
     <string name="contra_tag">Contrasenya:</string>
     <string name="usuario_tag">Usuari:</string>
     <string name="direccion_tag">Direcció</string>
+    <string name="direccion_info">Introdueix la seva direcció</string>
 </resources>

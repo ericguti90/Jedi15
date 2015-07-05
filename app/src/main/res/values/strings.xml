@@ -13,4 +13,5 @@
     <string name="title_activity_ranking">RankingActivity</string>
     <string name="direccion_tag">Dirección</string>
     <string name="title_activity_address_notification">AddressNotification</string>
+    <string name="direccion_info">Introduzca su dirección</string>
 </resources>

@@ -1,5 +1,7 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -104,6 +106,14 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
                 y = 0;
                 result.setText(String.valueOf(x));
                 break;
+            case R.id.imageView54:
+                Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse("http://cursos.jediupc.com/"));
+                startActivity(web);
+                break;
+            case R.id.imageView55:
+                Intent phone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:936592789"));
+                startActivity(phone);
+                break;
         }
     }
 
@@ -124,6 +134,8 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
         ImageView mul = (ImageView) findViewById(R.id.imageView16);
         ImageView eq = (ImageView) findViewById(R.id.imageView28);
         ImageView del = (ImageView) findViewById(R.id.imageView24);
+        ImageView web = (ImageView) findViewById(R.id.imageView54);
+        ImageView telf = (ImageView) findViewById(R.id.imageView55);
         result = (TextView) findViewById(R.id.textView4);
         num0.setOnClickListener(this);
         num1.setOnClickListener(this);
@@ -141,6 +153,8 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
         mul.setOnClickListener(this);
         eq.setOnClickListener(this);
         del.setOnClickListener(this);
+        web.setOnClickListener(this);
+        telf.setOnClickListener(this);
     }
 
     @Override

@@ -6,4 +6,5 @@
     <string name="contra_tag">Password:</string>
     <string name="usuario_tag">User:</string>
     <string name="direccion_tag">Address</string>
+    <string name="direccion_info">Insert your address</string>
 </resources>
