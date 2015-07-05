@@ -5,4 +5,5 @@
     <string name="hello_world">Hola món!</string>
     <string name="contra_tag">Contrasenya:</string>
     <string name="usuario_tag">Usuari:</string>
+    <string name="direccion_tag">Direcció</string>
 </resources>

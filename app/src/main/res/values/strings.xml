@@ -11,4 +11,6 @@
     <string name="title_activity_music">MusicActivity</string>
     <string name="title_activity_memory">memoryActivity</string>
     <string name="title_activity_ranking">RankingActivity</string>
+    <string name="direccion_tag">Dirección</string>
+    <string name="title_activity_address_notification">AddressNotification</string>
 </resources>
