@@ -11,8 +11,8 @@ public class MyBD extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "project";
     private static final String STATISTICS_TABLE_NAME = "usuaris";
-    private static final String STATISTICS_TABLE_CREATE = "CREATE TABLE" + STATISTICS_TABLE_NAME +
-            "(user TEXT PRIMARY KEY, password TEXT)";
+    private static final String STATISTICS_TABLE_CREATE = "CREATE TABLE " + STATISTICS_TABLE_NAME +
+            " (user TEXT PRIMARY KEY, password TEXT, address TEXT, image TEXT)";
 
     MyBD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,7 +25,7 @@ public class MyBD extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS" + STATISTICS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + STATISTICS_TABLE_NAME);
         db.execSQL(STATISTICS_TABLE_CREATE);
     }
 }
