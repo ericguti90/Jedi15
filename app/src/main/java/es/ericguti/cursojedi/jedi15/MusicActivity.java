@@ -16,25 +16,29 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Struct;
 import java.util.ArrayList;
 
 
-public class MusicActivity extends ActionBarActivity{
+public class MusicActivity extends ActionBarActivity implements View.OnClickListener{
     TextView text;
     int[] viewCoords = new int[2];
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayout;
-
+    static ImageView play;
     private ArrayList<Song> songs;
+    int imageX, imageY;
+    double finalHeight, finalWidth;
+    static boolean playMusic = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
-        final ImageView play = (ImageView) findViewById(R.id.imageView56);
+        play = (ImageView) findViewById(R.id.imageView56);
         text = (TextView) findViewById(R.id.textView11);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
@@ -74,15 +78,18 @@ public class MusicActivity extends ActionBarActivity{
         play.setOnTouchListener(new View.OnTouchListener() {
         @Override
         public boolean onTouch (View v, MotionEvent event) {
-                int touchX = (int) event.getX();
-                int touchY = (int) event.getY();
-                int imageX = touchX - viewCoords[0]; // viewCoords[0] is the X coordinate
-                int imageY = touchY - viewCoords[1]; // viewCoords[1] is the y coordinate
-                text.setText(imageX + " - " + imageY);
-                return false;
+
+            int touchX = (int) event.getX();
+            int touchY = (int) event.getY();
+            imageX = touchX - viewCoords[0]; // viewCoords[0] is the X coordinate
+            imageY = touchY - viewCoords[1]; // viewCoords[1] is the y coordinate
+            text.setText(imageX + " - " + imageY);
+            finalHeight = play.getMeasuredHeight();
+            finalWidth = play.getMeasuredWidth();
+            return false;
             }
         });
-
+        play.setOnClickListener(this);
     }
 
     private void cargarMusica() {
@@ -110,6 +117,13 @@ public class MusicActivity extends ActionBarActivity{
 
     }
 
+
+    public static void switchPlayPause(boolean music){
+        playMusic = music;
+        if (music) play.setImageResource(R.drawable.menu_pause);
+        else play.setImageResource(R.drawable.menu_play);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -130,5 +144,24 @@ public class MusicActivity extends ActionBarActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY < finalHeight/2) {
+            /*if(playMusic) {
+                playMusic = false;
+                switchPlayPause(false);
+            }
+            else {
+                playMusic = true;
+                switchPlayPause(true);
+            }*/
+            MyMusicAdapter.startPauseMusic();
+            //Toast.makeText(v.getContext(), "play", Toast.LENGTH_SHORT).show();
+        }
+        if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY > finalHeight/2) Toast.makeText(v.getContext(), "proximamente", Toast.LENGTH_SHORT).show();
+        else if(imageX<finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) Toast.makeText(v.getContext(), "retroceder", Toast.LENGTH_SHORT).show();
+        else if(imageX>finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) Toast.makeText(v.getContext(), "avanzar", Toast.LENGTH_SHORT).show();
     }
 }

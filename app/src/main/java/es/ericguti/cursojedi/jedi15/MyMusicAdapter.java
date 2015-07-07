@@ -17,75 +17,15 @@ import java.util.ArrayList;
  * Created by inlab on 07/07/2015.
  */
 public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterViewHolder> {
-    ArrayList<Song> songs;
-    MediaPlayer mediaPlayer;
-    String actual="";
+    static ArrayList<Song> songs;
+    static MediaPlayer mediaPlayer;
+    static String actual="";
+    static int posActual = 0;
 
     MyMusicAdapter(ArrayList<Song> songs){
         this.songs = songs;
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        /*contactos = new ArrayList<>();
-        contactos.add(new String("Benito Camela"));
-        contactos.add(new String("Alberto Carlos Huevos"));
-        contactos.add(new String("Lola Mento"));
-        contactos.add(new String("Aitor Tilla"));
-        contactos.add(new String("Elvis Teck"));
-        contactos.add(new String("Débora Dora"));
-        contactos.add(new String("Borja Món de York"));
-        contactos.add(new String("Encarna Vales"));
-        contactos.add(new String("Enrique Cido"));
-        contactos.add(new String("Francisco Jones"));
-        contactos.add(new String("Estela Gartija"));
-        contactos.add(new String("Andrés Trozado"));
-        contactos.add(new String("Carmelo Cotón"));
-        contactos.add(new String("Alberto Mate"));
-        contactos.add(new String("Chema Pamundi"));
-        contactos.add(new String("Armando Adistancia"));
-        contactos.add(new String("Helena Nito Del Bosque"));
-        contactos.add(new String("Unai Nomás"));
-        contactos.add(new String("Ester Colero"));
-        contactos.add(new String("Marcos Corrón"));
-        contactos.add(new String("Benito Camela"));
-        contactos.add(new String("Alberto Carlos Huevos"));
-        contactos.add(new String("Lola Mento"));
-        contactos.add(new String("Aitor Tilla"));
-        contactos.add(new String("Elvis Teck"));
-        contactos.add(new String("Débora Dora"));
-        contactos.add(new String("Borja Món de York"));
-        contactos.add(new String("Encarna Vales"));
-        contactos.add(new String("Enrique Cido"));
-        contactos.add(new String("Francisco Jones"));
-        contactos.add(new String("Estela Gartija"));
-        contactos.add(new String("Andrés Trozado"));
-        contactos.add(new String("Carmelo Cotón"));
-        contactos.add(new String("Alberto Mate"));
-        contactos.add(new String("Chema Pamundi"));
-        contactos.add(new String("Armando Adistancia"));
-        contactos.add(new String("Helena Nito Del Bosque"));
-        contactos.add(new String("Unai Nomás"));
-        contactos.add(new String("Ester Colero"));
-        contactos.add(new String("Marcos Corrón"));
-        contactos.add(new String("Benito Camela"));
-        contactos.add(new String("Alberto Carlos Huevos"));
-        contactos.add(new String("Lola Mento"));
-        contactos.add(new String("Aitor Tilla"));
-        contactos.add(new String("Elvis Teck"));
-        contactos.add(new String("Débora Dora"));
-        contactos.add(new String("Borja Món de York"));
-        contactos.add(new String("Encarna Vales"));
-        contactos.add(new String("Enrique Cido"));
-        contactos.add(new String("Francisco Jones"));
-        contactos.add(new String("Estela Gartija"));
-        contactos.add(new String("Andrés Trozado"));
-        contactos.add(new String("Carmelo Cotón"));
-        contactos.add(new String("Alberto Mate"));
-        contactos.add(new String("Chema Pamundi"));
-        contactos.add(new String("Armando Adistancia"));
-        contactos.add(new String("Helena Nito Del Bosque"));
-        contactos.add(new String("Unai Nomás"));
-        contactos.add(new String("Ester Colero"));
-        contactos.add(new String("Marcos Corrón"));*/
     }
 
     @Override
@@ -97,6 +37,36 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
         return new AdapterViewHolder(view);
     }
 
+    public static void startMusic(int pos){
+        try {
+            posActual=pos;
+            actual = songs.get(pos).name;
+            //mediaPlayer.stop();
+            mediaPlayer.reset();
+            //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setDataSource(songs.get(pos).url);
+            mediaPlayer.prepare(); // might take long! (for buffering, etc)
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void startPauseMusic(){
+        if(actual.equals("")) {
+            MusicActivity.switchPlayPause(true);
+            startMusic(posActual);
+        }
+        if(mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            MusicActivity.switchPlayPause(false);
+        }
+        else {
+            mediaPlayer.start();
+            MusicActivity.switchPlayPause(true);
+        }
+    }
+
     @Override
     public void onBindViewHolder(AdapterViewHolder holder, final int position) {
         holder.name.setText(songs.get(position).name);
@@ -106,24 +76,27 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
                 //v.setBackgroundColor(R.color.abc_background_cache_hint_selector_material_dark);
                 //v.setBackgroundResource(R.drawable.carta);
                 //Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
-                if(actual.equals("")) actual = songs.get(position).name;
-                else if (actual.equals(songs.get(position).name)){
-                    Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
-                    if(mediaPlayer.isPlaying()) mediaPlayer.pause();
-                    else mediaPlayer.start();
+
+                if(actual.equals("")) {
+                    MusicActivity.switchPlayPause(true);
+                    startMusic(position);
                 }
-                try {
-                    //mediaPlayer.stop();
-                    mediaPlayer.reset();
-                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mediaPlayer.setDataSource(songs.get(position).url);
-                    mediaPlayer.prepare(); // might take long! (for buffering, etc)
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                else if (actual.equals(songs.get(position).name)){
+                    //Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
+                    if(mediaPlayer.isPlaying()) {
+                        mediaPlayer.pause();
+                        MusicActivity.switchPlayPause(false);
+                    }
+                    else {
+                        mediaPlayer.start();
+                        MusicActivity.switchPlayPause(true);
+                    }
+                }
+                else {
+                    MusicActivity.switchPlayPause(true);
+                    startMusic(position);
                 }
                 notifyDataSetChanged();
-
             }
         };
         holder.itemView.setOnClickListener(titlelistener);
