@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
     int card1=-1,card2=-1;
     int cId1, cId2;
     int points = 0;
+    int finish = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,17 +153,40 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
             else {
                 card2 = card;
                 cId2 = v.getId();
-                checkPairCards();
+                checkPairCards(cId1,cId2,card1,card2);
             }
         }
     }
 
-    private void checkPairCards() {
+    private void checkPairCards(final int cid1, final int cid2, int c1, int c2) {
         ++points;
         text.setText(points+"");
-        if(cards.get(card1) == cards.get(card2)){
-            ((ImageView) findViewById(cId1)).setOnClickListener(null);
-            ((ImageView) findViewById(cId2)).setOnClickListener(null);
+        if(cards.get(c1) == cards.get(c2)){
+            Thread th = new Thread(new Runnable() {
+                public void run() {
+                    ((ImageView) findViewById(cid1)).setOnClickListener(null);
+                    ((ImageView) findViewById(cid2)).setOnClickListener(null);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ((ImageView) findViewById(cid1)).getHandler().post(new Runnable() {
+                        public void run() {
+                            ((ImageView) findViewById(cid1)).setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    ((ImageView) findViewById(cid2)).getHandler().post(new Runnable() {
+                        public void run() {
+                            ((ImageView) findViewById(cid2)).setVisibility(View.INVISIBLE);
+                        }
+                    });
+
+                }
+            });
+            th.start();
+            ++finish;
+            if(finish == 8) exitGame();
         }
         else {
             ((ImageView) findViewById(cId1)).setImageResource(R.drawable.carta);
@@ -169,5 +195,14 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
         touch = 0;
         card1=-1;
         card2=-1;
+    }
+
+    private void exitGame() {
+        /*try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        Toast.makeText(getApplicationContext(), "partida finalizada", Toast.LENGTH_SHORT).show();
     }
 }

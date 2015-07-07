@@ -26,22 +26,31 @@
         android:textColor="#ffff002f"
         android:editable="true" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/imageView29"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
-        android:layout_marginBottom="-20dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView56"
-        android:src="@drawable/menu_play"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:adjustViewBounds="true"/>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_weight="1"
+            android:id="@+id/mRecyclerView"
+            android:layout_above="@+id/imageView56"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView56"
+            android:src="@drawable/menu_play"
+            android:clickable="true"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
 </LinearLayout>
