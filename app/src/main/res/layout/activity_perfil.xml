@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Mejor puntuación:"
+            android:text="@string/mejorPuntuacion"
             android:textColor="#ff007fcc"
             android:id="@+id/textView8"
             android:textSize="20dp"
@@ -86,15 +86,6 @@
             android:elegantTextHeight="false"
             android:enabled="false" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageView51"
-        android:layout_alignTop="@+id/imageView49"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/icon_perfil_back"
-        android:clickable="false" />
 
     <ImageView
         android:layout_width="20dp"

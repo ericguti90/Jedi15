@@ -5,9 +5,9 @@ package es.ericguti.cursojedi.jedi15;
  */
 public class Ranking {
     public String name;
-    public String points;
+    public int points;
 
-    public Ranking(String thisTitle, String thisPoints) {
+    public Ranking(String thisTitle, int thisPoints) {
         name = thisTitle;
         points = thisPoints;
     }

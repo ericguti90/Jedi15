@@ -77,6 +77,8 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
             SharedPreferences.Editor editor = prefs.edit();
             editor.remove(langPref);
             editor.apply();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
             finish();
             return true;
         }

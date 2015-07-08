@@ -7,4 +7,12 @@
     <string name="usuario_tag">User:</string>
     <string name="direccion_tag">Address</string>
     <string name="direccion_info">Insert your address</string>
+    <string name="restart">Restart</string>
+    <string name="sesion">Log out</string>
+    <string name="mejorPuntuacion">Best score:</string>
+    <string name="peticionRegistro">Would you like register</string>
+    <string name="noExiste">User does not exist</string>
+    <string name="Aceptar">Acept</string>
+    <string name="Cancelar">Cancel</string>
+    <string name="contraIncorrecta"> Incorrect password</string>
 </resources>

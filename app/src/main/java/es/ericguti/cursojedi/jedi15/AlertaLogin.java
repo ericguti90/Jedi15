@@ -14,7 +14,7 @@ public class AlertaLogin extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Contraseña incorrecta")
+        builder.setMessage(R.string.contraIncorrecta)
                 .setTitle("Error")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

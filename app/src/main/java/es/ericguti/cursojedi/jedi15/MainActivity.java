@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
             intent.putExtra("user",user);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -107,6 +108,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                     intent.putExtra("user",userIN.getText().toString());
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     FragmentManager fragmentManager = getSupportFragmentManager();

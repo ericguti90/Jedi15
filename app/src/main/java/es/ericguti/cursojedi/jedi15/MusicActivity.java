@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 
 public class MusicActivity extends ActionBarActivity implements View.OnClickListener{
-    TextView text;
+    //TextView text;
     int[] viewCoords = new int[2];
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayout;
@@ -38,7 +38,7 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         play = (ImageView) findViewById(R.id.imageView56);
-        text = (TextView) findViewById(R.id.textView11);
+        //text = (TextView) findViewById(R.id.textView11);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
         //LinearLayoutManager necesita el contexto de la Activity.
@@ -61,8 +61,8 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
 
 
         //ListView music = (ListView) findViewById(R.id.listView);
-        play.getLocationOnScreen(viewCoords);
-        ViewTreeObserver vto = play.getViewTreeObserver();
+        //play.getLocationOnScreen(viewCoords);
+        /*ViewTreeObserver vto = play.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
                 play.getViewTreeObserver().removeOnPreDrawListener(this);
@@ -71,7 +71,7 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
                 text.setText("Height: " + finalHeight + " Width: " + finalWidth);
                 return true;
             }
-        });
+        });*/
 
                 //text.setText(play.getMeasuredWidth() + " " + play.getMeasuredHeight());
         play.setOnTouchListener(new View.OnTouchListener() {
@@ -82,7 +82,7 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
             int touchY = (int) event.getY();
             imageX = touchX - viewCoords[0]; // viewCoords[0] is the X coordinate
             imageY = touchY - viewCoords[1]; // viewCoords[1] is the y coordinate
-            text.setText(imageX + " - " + imageY);
+            //text.setText(imageX + " - " + imageY);
             finalHeight = play.getMeasuredHeight();
             finalWidth = play.getMeasuredWidth();
             return false;
@@ -148,30 +148,14 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY < finalHeight/2) {
-            /*if(playMusic) {
-                playMusic = false;
-                switchPlayPause(false);
-            }
-            else {
-                playMusic = true;
-                switchPlayPause(true);
-            }*/
             MyMusicAdapter.startPauseMusic();
-            //Toast.makeText(v.getContext(), "play", Toast.LENGTH_SHORT).show();
         }
         if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY > finalHeight/2) {
-            //Toast.makeText(v.getContext(), "proximamente", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(getApplicationContext(), YodaActivity.class);
             startActivity(intent);
-            /*
-            AddressNotification dialogo = new AddressNotification();
-                dialogo.show(getFragmentManager(),"dialog");
-             */
-            //FragmentManager fragmentManager = getFragmentManager();
-            //YodaDancing dialogo = new YodaDancing();
-            //dialogo.show(getFragmentManager(),"dialog");
         }
-        else if(imageX<finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) Toast.makeText(v.getContext(), "retroceder", Toast.LENGTH_SHORT).show();
-        else if(imageX>finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) Toast.makeText(v.getContext(), "avanzar", Toast.LENGTH_SHORT).show();
+        else if(imageX<finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) MyMusicAdapter.startMusic(MyMusicAdapter.posActual-1);//Toast.makeText(v.getContext(), "retroceder", Toast.LENGTH_SHORT).show();
+        else if(imageX>finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) MyMusicAdapter.startMusic(MyMusicAdapter.posActual+1);//Toast.makeText(v.getContext(), "avanzar", Toast.LENGTH_SHORT).show();
     }
 }

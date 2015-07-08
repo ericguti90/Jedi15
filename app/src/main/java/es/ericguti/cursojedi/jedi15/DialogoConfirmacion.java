@@ -21,9 +21,9 @@ public class DialogoConfirmacion extends DialogFragment {
         final Bundle args = getArguments();
         user = args.getString("user");
         pass = args.getString("pass");
-        builder.setMessage("¿Quieres registrarte " + user +"?")
-                .setTitle("Usuario no existe")
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()  {
+        builder.setMessage(R.string.peticionRegistro + " " + user +"?")
+                .setTitle(R.string.noExiste)
+                .setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener()  {
                     public void onClick(DialogInterface dialog, int id) {
                         //Log.i("Dialogos", "Confirmacion Aceptada.");
                         MyBD bdUsers = new MyBD(getActivity().getApplicationContext());
@@ -37,7 +37,7 @@ public class DialogoConfirmacion extends DialogFragment {
                         dialog.cancel();
                     }
                 })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("R.string.Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //Log.i("Dialogos", "Confirmacion Cancelada.");
                         dialog.cancel();

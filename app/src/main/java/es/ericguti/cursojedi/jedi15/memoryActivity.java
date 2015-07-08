@@ -84,6 +84,7 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            recreate();
             return true;
         }
 

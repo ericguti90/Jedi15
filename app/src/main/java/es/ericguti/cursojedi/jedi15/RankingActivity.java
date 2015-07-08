@@ -1,11 +1,15 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 
 public class RankingActivity extends ActionBarActivity {
@@ -24,7 +28,21 @@ public class RankingActivity extends ActionBarActivity {
         mLinearLayout = new LinearLayoutManager(this);
         //Asignamos el LinearLayoutManager al recycler:
         mRecyclerView.setLayoutManager(mLinearLayout);
-        mRecyclerView.setAdapter(new RankingAdapter());
+
+        MyBD bdUsers = new MyBD(this);
+        SQLiteDatabase db = bdUsers.getWritableDatabase();
+        ArrayList<Ranking> ranking = new ArrayList<Ranking>();
+        if(db != null) {
+            //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+            Cursor c = db.rawQuery("SELECT user,points FROM ranking ORDER BY points ASC", null);
+            if (c.moveToFirst()) {
+                do {
+                    ranking.add(new Ranking(c.getString(0),c.getInt((1))));
+                } while (c.moveToNext());
+            }
+        }
+        db.close();
+        mRecyclerView.setAdapter(new RankingAdapter(ranking));
     }
 
     @Override

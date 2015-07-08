@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -28,12 +29,34 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 
 
 public class PerfilActivity extends FragmentActivity implements View.OnClickListener, AddressNotification.DialogListener{
-    TextView dir;
+    TextView dir,name,points;
     ImageView img;
+
+    void loadInfo(){
+        name.setText(getIntent().getExtras().getString("user"));
+        MyBD bdUsers = new MyBD(this);
+        SQLiteDatabase db = bdUsers.getWritableDatabase();
+        if(db != null) {
+            //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+            String[] arg = new String[]{getIntent().getExtras().getString("user")};
+            Cursor c = db.rawQuery(" SELECT address,image FROM usuaris WHERE user=? ", arg);
+            if (c.moveToFirst()) {
+                if(c.getString(0).equals("")) dir.setText(R.string.direccion_tag);
+                else dir.setText(c.getString(0));
+                if(!c.getString(1).equals(""))Picasso.with(getApplicationContext()).load(c.getString(1)).error(R.drawable.icon_perfil).resize(100, 100).transform(new CircleTransform()).into(img);
+            }
+            c = db.rawQuery(" SELECT MIN(points) FROM ranking WHERE user=? ", arg);
+            if (c.moveToFirst()) points.setText(c.getInt(0)+"");
+            else points.setText(0);
+        }
+        db.close();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +64,12 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
         setContentView(R.layout.activity_perfil);
         img = (ImageView) findViewById(R.id.imageView49);
         ImageView add = (ImageView) findViewById(R.id.imageView52);
+        name = (TextView) findViewById(R.id.textView6);
         dir = (TextView) findViewById(R.id.textView7);
+        points = (TextView) findViewById(R.id.textView9);
         img.setOnClickListener(this);
         add.setOnClickListener(this);
+        loadInfo();
     }
 
     @Override
@@ -134,20 +160,40 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
         EditText eText = (EditText) dialogView.findViewById(R.id.editText3);
         TextView text = (TextView) findViewById(R.id.textView7);
         text.setText(eText.getText());
+        MyBD bdUsers = new MyBD(this);
+        SQLiteDatabase db = bdUsers.getWritableDatabase();
+        if(db != null) {
+            //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+            //String[] arg = new String[]{data.getDataString(),getIntent().getExtras().getString("user")};
+            //db.rawQuery(" UPDATE usuaris SET image=? WHERE user=? ", arg);
+            db.execSQL("UPDATE usuaris SET address='"+ eText.getText() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
+        }
+        db.close();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
+            /*Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            img.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            //img.setImageBitmap(BitmapFactory.decodeFile(picturePath));*/
+            Picasso.with(getApplicationContext()).load(data.getDataString()).error(R.drawable.icon_perfil).resize(100, 100).transform(new CircleTransform()).into(img);
+            MyBD bdUsers = new MyBD(this);
+            SQLiteDatabase db = bdUsers.getWritableDatabase();
+            if(db != null) {
+                //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+                //String[] arg = new String[]{data.getDataString(),getIntent().getExtras().getString("user")};
+                //db.rawQuery(" UPDATE usuaris SET image=? WHERE user=? ", arg);
+                db.execSQL("UPDATE usuaris SET image='"+ data.getDataString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
+            }
+            db.close();
+            //Picasso.with(getApplicationContext()).loa
         }
     }
 }

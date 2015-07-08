@@ -7,4 +7,12 @@
     <string name="usuario_tag">Usuari:</string>
     <string name="direccion_tag">Direcció</string>
     <string name="direccion_info">Introdueix la seva direcció</string>
+    <string name="restart">Reiniciar</string>
+    <string name="sesion">Tancar sessió</string>
+    <string name="mejorPuntuacion">Millor puntuació:</string>
+    <string name="peticionRegistro">Vols registrar-te </string>
+    <string name="noExiste">Usuari no existeix</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="contraIncorrecta">Contrasenya incorrecta</string>
 </resources>

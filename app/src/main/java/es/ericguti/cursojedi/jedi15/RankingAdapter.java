@@ -13,12 +13,9 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.AdapterV
     ArrayList<Ranking> ranking;
 
 
-    RankingAdapter(){
+    RankingAdapter(ArrayList<Ranking> list){
         ranking = new ArrayList<Ranking>();
-        ranking.add(new Ranking("a","123"));
-        ranking.add(new Ranking("b","12w3"));
-        ranking.add(new Ranking("c","12343"));
-        ranking.add(new Ranking("d","122343"));
+        ranking = list;
     }
 
     @Override
@@ -33,10 +30,11 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.AdapterV
     @Override
     public void onBindViewHolder(AdapterViewHolderRanking holder, int position) {
         holder.name.setText(ranking.get(position).name);
-        holder.points.setText(ranking.get(position).points);
+        holder.points.setText(ranking.get(position).points+"");
         if(position == 0) holder.logo.setImageResource(R.drawable.ranking1);
         else if (position == 1) holder.logo.setImageResource(R.drawable.ranking2);
         else if (position == 2) holder.logo.setImageResource(R.drawable.ranking3);
+        else holder.position.setText(position+1+"º");
     }
 
     @Override
@@ -48,6 +46,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.AdapterV
     public class AdapterViewHolderRanking extends RecyclerView.ViewHolder {
         public TextView name;
         public TextView points;
+        public TextView position;
         public ImageView logo;
 
         public AdapterViewHolderRanking(View itemView) {
@@ -55,6 +54,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.AdapterV
             this.name = (TextView) itemView.findViewById(R.id.textView13);
             this.points = (TextView) itemView.findViewById(R.id.textView14);
             this.logo = (ImageView) itemView.findViewById(R.id.imageView58);
+            this.position = (TextView) itemView.findViewById(R.id.textView15);
         }
         /*
         *  Mantener una referencia a los elementos de nuestro ListView mientras el usuario realiza

@@ -39,6 +39,8 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
 
     public static void startMusic(int pos){
         try {
+            if(pos<1) pos = songs.size()-1;
+            else if(pos>songs.size()-1) pos = 0;
             posActual=pos;
             actual = songs.get(pos).name;
             //mediaPlayer.stop();

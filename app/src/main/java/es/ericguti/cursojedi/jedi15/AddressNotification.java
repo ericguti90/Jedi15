@@ -44,7 +44,7 @@ public class AddressNotification extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         builder.setView(inflater.inflate(R.layout.activity_address_notification, null))
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onDialogPositiveClick(AddressNotification.this);
                         dialog.cancel();
