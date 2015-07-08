@@ -31,6 +31,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         changeLang(language);
     }
 
+    public void checkUser(){
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String user = prefs.getString("user", "");
+        if(!user.equalsIgnoreCase("")) {
+            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+            intent.putExtra("user",user);
+            startActivity(intent);
+        }
+    }
+
     void updateTexts(){
         user.setText(R.string.usuario_tag);
         pass.setText(R.string.contra_tag);
@@ -53,6 +63,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(langPref, lang);
+        editor.apply();
+    }
+
+    public void saveUser(String user)
+    {
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("user", user);
         editor.apply();
     }
 
@@ -85,7 +103,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 String password = c.getString(1);
                 if (password.equals(passIN.getText().toString())) {
                     db.close();
+                    saveUser(userIN.getText().toString());
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                    intent.putExtra("user",userIN.getText().toString());
                     startActivity(intent);
                 }
                 else {
@@ -113,6 +133,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkUser();
         user = (TextView) findViewById(R.id.textView2);
         pass = (TextView) findViewById(R.id.textView3);
         userIN = (EditText) findViewById(R.id.editText);

@@ -1,6 +1,7 @@
 package es.ericguti.cursojedi.jedi15;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -14,11 +15,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 
 
@@ -160,7 +159,18 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
             MyMusicAdapter.startPauseMusic();
             //Toast.makeText(v.getContext(), "play", Toast.LENGTH_SHORT).show();
         }
-        if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY > finalHeight/2) Toast.makeText(v.getContext(), "proximamente", Toast.LENGTH_SHORT).show();
+        if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY > finalHeight/2) {
+            //Toast.makeText(v.getContext(), "proximamente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), YodaActivity.class);
+            startActivity(intent);
+            /*
+            AddressNotification dialogo = new AddressNotification();
+                dialogo.show(getFragmentManager(),"dialog");
+             */
+            //FragmentManager fragmentManager = getFragmentManager();
+            //YodaDancing dialogo = new YodaDancing();
+            //dialogo.show(getFragmentManager(),"dialog");
+        }
         else if(imageX<finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) Toast.makeText(v.getContext(), "retroceder", Toast.LENGTH_SHORT).show();
         else if(imageX>finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) Toast.makeText(v.getContext(), "avanzar", Toast.LENGTH_SHORT).show();
     }

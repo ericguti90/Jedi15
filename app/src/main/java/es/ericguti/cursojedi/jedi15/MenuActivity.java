@@ -1,6 +1,8 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,15 +15,20 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         Intent intent = null;
+        String user;
         switch (v.getId()) {
             case R.id.imageView10:
                 intent = new Intent(getApplicationContext(), CalculadoraActivity.class);
                 break;
             case R.id.imageView7:
+                user = getIntent().getExtras().getString("user");
                 intent = new Intent(getApplicationContext(), memoryActivity.class);
+                intent.putExtra("user",user);
                 break;
             case R.id.imageView8:
+                user = getIntent().getExtras().getString("user");
                 intent = new Intent(getApplicationContext(), PerfilActivity.class);
+                intent.putExtra("user",user);
                 break;
             case R.id.imageView9:
                 intent = new Intent(getApplicationContext(), RankingActivity.class);
@@ -65,6 +72,12 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            String langPref = "user";
+            SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.remove(langPref);
+            editor.apply();
+            finish();
             return true;
         }
 

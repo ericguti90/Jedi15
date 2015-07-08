@@ -1,5 +1,7 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -203,6 +205,11 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
-        Toast.makeText(getApplicationContext(), "partida finalizada", Toast.LENGTH_SHORT).show();
+        MyBD bdRanking = new MyBD(getApplicationContext());
+        SQLiteDatabase db = bdRanking.getWritableDatabase();
+        if(db != null) {
+            db.execSQL("INSERT INTO ranking(user,points) VALUES ('"+getIntent().getExtras().getString("user")+"',"+points+")");
+        }
+        db.close();
     }
 }

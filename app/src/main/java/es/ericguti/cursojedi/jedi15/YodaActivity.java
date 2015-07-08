@@ -2,35 +2,32 @@ package es.ericguti.cursojedi.jedi15;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import com.koushikdutta.ion.Ion;
 
 
-public class RankingActivity extends ActionBarActivity {
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLinearLayout;
-
+public class YodaActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ranking);
-        mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView2);
-        //LinearLayoutManager necesita el contexto de la Activity.
-        //El LayoutManager se encarga de posicionar los items dentro del recyclerview
-        //Y de definir la politica de reciclaje de los items no visibles.
-        mLinearLayout = new LinearLayoutManager(this);
-        //Asignamos el LinearLayoutManager al recycler:
-        mRecyclerView.setLayoutManager(mLinearLayout);
-        mRecyclerView.setAdapter(new RankingAdapter());
+        setContentView(R.layout.activity_yoda);
+        ImageView gif = (ImageView) findViewById(R.id.imageView57);
+        //Picasso.with(this).load("http://media1.giphy.com/media/6fScAIQR0P0xW/giphy.gif").into(video);
+        Ion.with(this)
+                .load("http://media1.giphy.com/media/6fScAIQR0P0xW/giphy.gif")
+                .withBitmap()
+                .fitCenter()
+                .intoImageView(gif);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_ranking, menu);
+        getMenuInflater().inflate(R.menu.menu_yoda, menu);
         return true;
     }
 

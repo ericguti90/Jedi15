@@ -14,4 +14,5 @@
     <string name="direccion_tag">Dirección</string>
     <string name="title_activity_address_notification">AddressNotification</string>
     <string name="direccion_info">Introduzca su dirección</string>
+    <string name="title_activity_yoda">YodaActivity</string>
 </resources>
