@@ -20,21 +20,14 @@ import java.util.ArrayList;
  */
 public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterViewHolder> {
     static ArrayList<Song> songs;
-    //static MediaPlayer mediaPlayer;
-    //static String actual="";
-    //static int posActual = 0;
     MusicActivity mActivity;
     private Callback listener;
-    int positionClick = 0;
 
     MyMusicAdapter(ArrayList<Song> songs, MusicActivity m){
         this.songs = songs;
         listener = (Callback) m;
         this.mActivity = m;
-        //mediaPlayer = new MediaPlayer();
-        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
-
 
     @Override
     public MyMusicAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,74 +38,18 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
         return new AdapterViewHolder(view);
     }
 
-    /*public static void startMusic(int pos){
-        try {
-            if(pos<1) pos = songs.size()-1;
-            else if(pos>songs.size()-1) pos = 0;
-            posActual=pos;
-            actual = songs.get(pos).name;
-            //mediaPlayer.stop();
-            mediaPlayer.reset();
-            //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setDataSource(songs.get(pos).url);
-            mediaPlayer.prepare(); // might take long! (for buffering, etc)
-            mediaPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*public static void startPauseMusic(){
-        if(actual.equals("")) {
-            MusicActivity.switchPlayPause(true);
-            startMusic(posActual);
-        }
-        if(mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            MusicActivity.switchPlayPause(false);
-        }
-        else {
-            mediaPlayer.start();
-            MusicActivity.switchPlayPause(true);
-        }
-    }*/
-
     @Override
     public void onBindViewHolder(AdapterViewHolder holder, final int position) {
         holder.name.setText(songs.get(position).name);
         View.OnClickListener titlelistener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //v.setBackgroundColor(R.color.abc_background_cache_hint_selector_material_dark);
-                //v.setBackgroundResource(R.drawable.carta);
-                //Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
-
-               /* if(actual.equals("")) {
-                    MusicActivity.switchPlayPause(true);
-                    startMusic(position);
-                }
-                else if (actual.equals(songs.get(position).name)){
-                    //Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
-                    if(mediaPlayer.isPlaying()) {
-                        mediaPlayer.pause();
-                        MusicActivity.switchPlayPause(false);
-                    }
-                    else {
-                        mediaPlayer.start();
-                        MusicActivity.switchPlayPause(true);
-                    }
-                }
-                else {
-                    MusicActivity.switchPlayPause(true);
-                    startMusic(position);
-                }*/
                 listener.click(position);
                 notifyDataSetChanged();
             }
         };
         holder.itemView.setOnClickListener(titlelistener);
     }
-
 
     @Override
     public int getItemCount() {
@@ -132,8 +69,6 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
         *  evitamos las frecuentes llamadas a findViewById, la cuál se realizaría únicamente la primera vez y el resto
         *  llamaríamos a la referencia en el ViewHolder, ahorrándonos procesamiento.
         */
-
-
     }
 
     public static interface Callback {

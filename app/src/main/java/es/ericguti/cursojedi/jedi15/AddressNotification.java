@@ -50,7 +50,6 @@ public class AddressNotification extends DialogFragment {
                 .setNeutralButton("GPS", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.searchGPS();
-                        //listener.onDialogPositiveClick(AddressNotification.this);
                         dialog.cancel();
                     }
                 });

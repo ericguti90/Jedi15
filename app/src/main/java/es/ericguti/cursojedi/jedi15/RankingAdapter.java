@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.AdapterViewHolderRanking> {
     ArrayList<Ranking> ranking;
 
-
     RankingAdapter(ArrayList<Ranking> list){
         ranking = new ArrayList<Ranking>();
         ranking = list;

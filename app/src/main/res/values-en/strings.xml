@@ -22,4 +22,5 @@
     <string name="borrarRanking">Delete Ranking</string>
     <string name="llamar">Call</string>
     <string name="navegador">Browser</string>
+    <string name="newuser">User created</string>
 </resources>

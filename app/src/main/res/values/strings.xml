@@ -30,4 +30,5 @@
     <string name="borrarRanking">Borrar Ranking</string>
     <string name="llamar">Llamar</string>
     <string name="navegador">Navegador</string>
+    <string name="newuser">Usuario creado</string>
 </resources>

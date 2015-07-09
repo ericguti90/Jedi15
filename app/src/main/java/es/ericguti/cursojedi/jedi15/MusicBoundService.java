@@ -21,6 +21,7 @@ public class MusicBoundService extends Service {
     static String actual="";
     static int posActual = 0;
     static ArrayList<Song> songs;
+    static MediaPlayer mediaPlayer;
 
     @Override
     public void onDestroy() {
@@ -29,7 +30,6 @@ public class MusicBoundService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.v("service", "onbind");
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         return mBinder;
@@ -37,28 +37,19 @@ public class MusicBoundService extends Service {
 
     public class MyBinder extends Binder {
         MusicBoundService getService() {
-            Log.v("service", "getservice");
             return MusicBoundService.this;
         }
     }
 
-    static MediaPlayer mediaPlayer;
 
-    /*public void iniMediaPlayer(){
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-    }*/
 
     public static void startMusic(int pos){
-        Log.v("service", "startmusic");
         try {
             if(pos<1) pos = songs.size()-1;
             else if(pos>songs.size()-1) pos = 0;
             posActual=pos;
             actual = songs.get(pos).name;
-            //mediaPlayer.stop();
             mediaPlayer.reset();
-            //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(songs.get(pos).url);
             mediaPlayer.prepare(); // might take long! (for buffering, etc)
             mediaPlayer.start();
@@ -68,7 +59,6 @@ public class MusicBoundService extends Service {
     }
 
     public static void startPauseMusic(){
-        Log.v("service", "startpause");
         if(actual.equals("")) {
             MusicActivity.switchPlayPause(true);
             startMusic(posActual);
@@ -84,16 +74,12 @@ public class MusicBoundService extends Service {
     }
 
     public void click(final int position){
-        Log.v("service", "click");
         if(actual.equals("")) {
-            Log.v("service", "switchplaypause");
             MusicActivity.switchPlayPause(true);
             startMusic(position);
         }
         else if (actual.equals(songs.get(position).name)){
-            //Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
             if(mediaPlayer.isPlaying()) {
-                Log.v("service", "switchplaypause");
                 mediaPlayer.pause();
                 MusicActivity.switchPlayPause(false);
             }
@@ -103,10 +89,13 @@ public class MusicBoundService extends Service {
             }
         }
         else {
-            Log.v("service", "switchplaypause");
             MusicActivity.switchPlayPause(true);
             startMusic(position);
         }
+    }
+
+    public void loadSong(ArrayList<Song> s){
+        songs = s;
     }
 }
 

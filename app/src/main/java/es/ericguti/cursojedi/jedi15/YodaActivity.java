@@ -16,7 +16,6 @@ public class YodaActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yoda);
         ImageView gif = (ImageView) findViewById(R.id.imageView57);
-        //Picasso.with(this).load("http://media1.giphy.com/media/6fScAIQR0P0xW/giphy.gif").into(video);
         Ion.with(this)
                 .load("http://media1.giphy.com/media/6fScAIQR0P0xW/giphy.gif")
                 .withBitmap()

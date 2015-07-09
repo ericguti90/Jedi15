@@ -16,7 +16,6 @@ public class RankingActivity extends ActionBarActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +32,6 @@ public class RankingActivity extends ActionBarActivity {
         SQLiteDatabase db = bdUsers.getWritableDatabase();
         ArrayList<Ranking> ranking = new ArrayList<Ranking>();
         if(db != null) {
-            //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
             Cursor c = db.rawQuery("SELECT user,points FROM ranking ORDER BY points ASC", null);
             if (c.moveToFirst()) {
                 do {
@@ -54,20 +52,11 @@ public class RankingActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             MyBD bdUsers = new MyBD(this);
             SQLiteDatabase db = bdUsers.getWritableDatabase();
-            if(db != null) {
-                db.execSQL("DELETE FROM ranking");
-                //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
-                //Cursor c = db.rawQuery("SELECT user,points FROM ranking ORDER BY points ASC", null);
-            }
+            if(db != null) db.execSQL("DELETE FROM ranking");
             db.close();
             recreate();
             return true;

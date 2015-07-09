@@ -55,7 +55,6 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
         MyBD bdUsers = new MyBD(this);
         SQLiteDatabase db = bdUsers.getWritableDatabase();
         if(db != null) {
-            //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
             String[] arg = new String[]{getIntent().getExtras().getString("user")};
             Cursor c = db.rawQuery(" SELECT address,image FROM usuaris WHERE user=? ", arg);
             if (c.moveToFirst()) {
@@ -103,15 +102,9 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
                     dir.setText(street);
                     locationManager.removeUpdates(locationListener);
                     locationManager = null;
-                    //Log.v("LOG", ((Double) location.getLatitude()).toString());
                     MyBD bdUsers = new MyBD(getApplicationContext());
                     SQLiteDatabase db = bdUsers.getWritableDatabase();
-                    if(db != null) {
-                        //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
-                        //String[] arg = new String[]{data.getDataString(),getIntent().getExtras().getString("user")};
-                        //db.rawQuery(" UPDATE usuaris SET image=? WHERE user=? ", arg);
-                        db.execSQL("UPDATE usuaris SET address='"+ street.toString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
-                    }
+                    if(db != null) db.execSQL("UPDATE usuaris SET address='"+ street.toString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
                     db.close();
                 }
 
@@ -139,65 +132,16 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_perfil, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
+        if (id == R.id.action_settings) return true;
         return super.onOptionsItemSelected(item);
     }
-
-
-    /*public static Bitmap getRoundedCornerBitmap( Drawable drawable, boolean square) {
-        int width = 0;
-        int height = 0;
-
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap() ;
-
-        if(square){
-            if(bitmap.getWidth() < bitmap.getHeight()){
-                width = bitmap.getWidth();
-                height = bitmap.getWidth();
-            } else {
-                width = bitmap.getHeight();
-                height = bitmap.getHeight();
-            }
-        } else {
-            height = bitmap.getHeight();
-            width = bitmap.getWidth();
-        }
-
-        Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, width, height);
-        final RectF rectF = new RectF(rect);
-        final float roundPx = 90;
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-
-        return output;
-    }*/
 
     @Override
     public void onClick(View v) {
@@ -207,10 +151,8 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
                 startActivityForResult(i, 2);
                 break;
             case R.id.imageView52:
-                //FragmentManager fragmentManager = getFragmentManager();
                 AddressNotification dialogo = new AddressNotification();
                 dialogo.show(getFragmentManager(),"dialog");
-
                 break;
         }
     }
@@ -219,8 +161,6 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
         // User pressed OK, so we need to grab the values from the
         // dialog's fields and apply them to the Views in the Main
         // Activity
-
-        // Start with the payment amount
         Dialog dialogView = dialog.getDialog();
         EditText eText = (EditText) dialogView.findViewById(R.id.editText3);
         TextView text = (TextView) findViewById(R.id.textView7);
@@ -228,9 +168,6 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
         MyBD bdUsers = new MyBD(this);
         SQLiteDatabase db = bdUsers.getWritableDatabase();
         if(db != null) {
-            //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
-            //String[] arg = new String[]{data.getDataString(),getIntent().getExtras().getString("user")};
-            //db.rawQuery(" UPDATE usuaris SET image=? WHERE user=? ", arg);
             db.execSQL("UPDATE usuaris SET address='"+ eText.getText() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
         }
         db.close();
@@ -240,27 +177,11 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
-            /*Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            //img.setImageBitmap(BitmapFactory.decodeFile(picturePath));*/
             Picasso.with(getApplicationContext()).load(data.getDataString()).error(R.drawable.icon_perfil).resize(100, 100).transform(new CircleTransform()).into(img);
             MyBD bdUsers = new MyBD(this);
             SQLiteDatabase db = bdUsers.getWritableDatabase();
-            if(db != null) {
-                //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
-                //String[] arg = new String[]{data.getDataString(),getIntent().getExtras().getString("user")};
-                //db.rawQuery(" UPDATE usuaris SET image=? WHERE user=? ", arg);
-                db.execSQL("UPDATE usuaris SET image='"+ data.getDataString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
-            }
+            if(db != null) db.execSQL("UPDATE usuaris SET image='"+ data.getDataString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
             db.close();
-            //Picasso.with(getApplicationContext()).loa
         }
     }
-
-
 }

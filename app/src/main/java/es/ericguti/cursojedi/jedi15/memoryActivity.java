@@ -82,13 +82,11 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             recreate();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -193,8 +191,6 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
             if(finish == 8) exitGame();
         }
         else {
-            //final int card1 = cid1;
-            //final int card2 = cid2;
             Thread th = new Thread(new Runnable() {
                 public void run() {
                     try {
@@ -223,11 +219,6 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
     }
 
     private void exitGame() {
-        /*try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         MyBD bdRanking = new MyBD(getApplicationContext());
         SQLiteDatabase db = bdRanking.getWritableDatabase();
         if(db != null) {

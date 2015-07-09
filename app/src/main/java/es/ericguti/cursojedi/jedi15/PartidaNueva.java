@@ -13,7 +13,6 @@ public class PartidaNueva extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         Bundle args = getArguments();
         String points = args.getString("points");
@@ -23,12 +22,10 @@ public class PartidaNueva extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         getActivity().recreate();
-                        //Log.i("Dialogos", "Confirmacion Aceptada.");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //Log.i("Dialogos", "Confirmacion Cancelada.");
                         getActivity().finish();
                         dialog.cancel();
                     }
