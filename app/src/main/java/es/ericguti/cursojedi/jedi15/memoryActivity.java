@@ -2,6 +2,7 @@ package es.ericguti.cursojedi.jedi15;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -161,10 +162,10 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
         }
     }
 
-    private void checkPairCards(final int cid1, final int cid2, int c1, int c2) {
+    private void checkPairCards(final int cid1, final int cid2, final int c1, final int c2) {
         ++points;
         text.setText(points+"");
-        if(cards.get(c1) == cards.get(c2)){
+        if(cards.get(c1).equals(cards.get(c2))){
             Thread th = new Thread(new Runnable() {
                 public void run() {
                     ((ImageView) findViewById(cid1)).setOnClickListener(null);
@@ -192,8 +193,29 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
             if(finish == 8) exitGame();
         }
         else {
-            ((ImageView) findViewById(cId1)).setImageResource(R.drawable.carta);
-            ((ImageView) findViewById(cId2)).setImageResource(R.drawable.carta);
+            //final int card1 = cid1;
+            //final int card2 = cid2;
+            Thread th = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Thread.sleep(700);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ((ImageView) findViewById(cid1)).getHandler().post(new Runnable() {
+                        public void run() {
+                            ((ImageView) findViewById(cid1)).setImageResource(R.drawable.carta);
+                        }
+                    });
+                    ((ImageView) findViewById(cid2)).getHandler().post(new Runnable() {
+                        public void run() {
+                            ((ImageView) findViewById(cid2)).setImageResource(R.drawable.carta);
+                        }
+                    });
+
+                }
+            });
+            th.start();
         }
         touch = 0;
         card1=-1;
@@ -212,5 +234,11 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
             db.execSQL("INSERT INTO ranking(user,points) VALUES ('"+getIntent().getExtras().getString("user")+"',"+points+")");
         }
         db.close();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        PartidaNueva dialogo = new PartidaNueva();
+        Bundle bundle = new Bundle();
+        bundle.putString("points", String.valueOf(points));
+        dialogo.setArguments(bundle); //para pasar argumentos al dialogo
+        dialogo.show(fragmentManager, "tagAlerta");
     }
 }

@@ -34,23 +34,19 @@
         </activity>
         <activity
             android:name=".MusicActivity"
-            android:label="@string/title_activity_music" >
+            android:label="@string/title_activity_music"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".memoryActivity"
-            android:label="@string/title_activity_memory" >
+            android:label="@string/title_activity_memory"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".RankingActivity"
             android:label="@string/title_activity_ranking" >
-        </activity>
-        <activity
-            android:name=".AddressNotification"
-            android:label="@string/title_activity_address_notification" >
-        </activity>
-        <activity
-            android:name=".YodaDancing"
-            android:label="@string/title_activity_yoda" >
         </activity>
         <activity
             android:name=".YodaActivity"

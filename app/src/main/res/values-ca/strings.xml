@@ -10,9 +10,13 @@
     <string name="restart">Reiniciar</string>
     <string name="sesion">Tancar sessió</string>
     <string name="mejorPuntuacion">Millor puntuació:</string>
-    <string name="peticionRegistro">Vols registrar-te </string>
     <string name="noExiste">Usuari no existeix</string>
     <string name="Aceptar">Aceptar</string>
     <string name="Cancelar">Cancelar</string>
     <string name="contraIncorrecta">Contrasenya incorrecta</string>
+    <string name="registro">Vols registrar-te</string>
+    <string name="FinPartida">Partida finalitzada</string>
+    <string name="volverJugar">Vols tornar a jugar?</string>
+    <string name="puntuacion">Enhorabona! La seva puntuació es:</string>
+    <string name="Si">Si!</string>
 </resources>

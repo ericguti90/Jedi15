@@ -18,9 +18,13 @@
     <string name="restart">Reiniciar</string>
     <string name="sesion">Cerrar sesión</string>
     <string name="mejorPuntuacion">Mejor puntuación:</string>
-    <string name="peticionRegistro">¿Quieres registrarte </string>
     <string name="noExiste">Usuario no existe</string>
     <string name="Aceptar">Aceptar</string>
     <string name="Cancelar">Cancelar</string>
     <string name="contraIncorrecta">Contraseña incorrecta</string>
+    <string name="registro">¿Quieres registrarte</string>
+    <string name="FinPartida">Partida finalizada</string>
+    <string name="volverJugar">¿Quieres volver a jugar?</string>
+    <string name="puntuacion">Enhorabuena! Tu puntuación es:</string>
+    <string name="Si">¡Sí!</string>
 </resources>
