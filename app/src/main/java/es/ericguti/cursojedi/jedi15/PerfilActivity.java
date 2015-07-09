@@ -101,7 +101,7 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
                     String street = addressList.get(0).getAddressLine(0).toString();
                     dir.setText(street);
                     locationManager.removeUpdates(locationListener);
-                    locationManager = null;
+                    //locationManager = null;
                     MyBD bdUsers = new MyBD(getApplicationContext());
                     SQLiteDatabase db = bdUsers.getWritableDatabase();
                     if(db != null) db.execSQL("UPDATE usuaris SET address='"+ street.toString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
