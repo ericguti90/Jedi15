@@ -19,4 +19,7 @@
     <string name="volverJugar">Do you want to play again?</string>
     <string name="puntuacion">Congratulation! Your score is:</string>
     <string name="Si">Yes!</string>
+    <string name="borrarRanking">Delete Ranking</string>
+    <string name="llamar">Call</string>
+    <string name="navegador">Browser</string>
 </resources>

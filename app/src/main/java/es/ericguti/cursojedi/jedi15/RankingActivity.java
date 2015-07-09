@@ -61,9 +61,17 @@ public class RankingActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            MyBD bdUsers = new MyBD(this);
+            SQLiteDatabase db = bdUsers.getWritableDatabase();
+            if(db != null) {
+                db.execSQL("DELETE FROM ranking");
+                //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+                //Cursor c = db.rawQuery("SELECT user,points FROM ranking ORDER BY points ASC", null);
+            }
+            db.close();
+            recreate();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

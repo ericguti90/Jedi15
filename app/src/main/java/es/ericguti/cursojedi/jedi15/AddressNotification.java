@@ -14,11 +14,8 @@ import android.view.MenuItem;
 
 public class AddressNotification extends DialogFragment {
 
-    private DialogListener listener;
+    private Callback listener;
 
-    public interface DialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-    }
 
     // Override the Fragment.onAttach() method to instantiate the
     // NoticeDialogListener
@@ -29,7 +26,7 @@ public class AddressNotification extends DialogFragment {
         try {
             // Instantiate the NoticeDialogListener so we can send events to the
             // host
-            listener = (DialogListener) activity;
+            listener = (Callback) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
@@ -49,9 +46,23 @@ public class AddressNotification extends DialogFragment {
                         listener.onDialogPositiveClick(AddressNotification.this);
                         dialog.cancel();
                     }
+                })
+                .setNeutralButton("GPS", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        listener.searchGPS();
+                        //listener.onDialogPositiveClick(AddressNotification.this);
+                        dialog.cancel();
+                    }
                 });
-
         return builder.create();
     }
+
+    public static interface Callback {
+        public abstract void searchGPS();
+        public void onDialogPositiveClick(DialogFragment dialog);
+    }
+
+
+
 }
 

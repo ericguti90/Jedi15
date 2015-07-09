@@ -172,4 +172,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("user", userIN.getText().toString());
+        outState.putString("pass", passIN.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        userIN.setText(savedInstanceState.getString("user"));
+        passIN.setText(savedInstanceState.getString("pass"));
+    }
 }

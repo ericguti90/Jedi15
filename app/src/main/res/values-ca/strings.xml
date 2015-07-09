@@ -19,4 +19,7 @@
     <string name="volverJugar">Vols tornar a jugar?</string>
     <string name="puntuacion">Enhorabona! La seva puntuació es:</string>
     <string name="Si">Si!</string>
+    <string name="borrarRanking">Esborrar Ranking</string>
+    <string name="llamar">Trucar</string>
+    <string name="navegador">Navegador</string>
 </resources>

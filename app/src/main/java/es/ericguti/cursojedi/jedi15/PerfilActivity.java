@@ -2,6 +2,7 @@ package es.ericguti.cursojedi.jedi15;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.MediaStore;
 
@@ -22,6 +28,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,11 +39,16 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 
-public class PerfilActivity extends FragmentActivity implements View.OnClickListener, AddressNotification.DialogListener{
+public class PerfilActivity extends FragmentActivity implements View.OnClickListener, AddressNotification.Callback{
     TextView dir,name,points;
     ImageView img;
+    List<Address> addressList;
+    LocationManager locationManager;
+    LocationListener locationListener;
 
     void loadInfo(){
         name.setText(getIntent().getExtras().getString("user"));
@@ -70,6 +82,59 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
         img.setOnClickListener(this);
         add.setOnClickListener(this);
         loadInfo();
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Geocoder gc = new Geocoder(getApplicationContext());
+                try {
+                    addressList = gc.getFromLocation(location.getLatitude(), location.getLongitude(),5);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                /*for (int i = 0; i < addressList.size(); i++) {
+                    if (i == 0) dir.setText("");
+                    dir.setText((dir.getText() + "\n" + addressList.get(i).getAddressLine(0).toString()));
+                }*/
+                // Solo muestro la calle y no el resto de info como se hace en el for anterior
+                if (addressList.size()>0) {
+                    String street = addressList.get(0).getAddressLine(0).toString();
+                    dir.setText(street);
+                    locationManager.removeUpdates(locationListener);
+                    locationManager = null;
+                    //Log.v("LOG", ((Double) location.getLatitude()).toString());
+                    MyBD bdUsers = new MyBD(getApplicationContext());
+                    SQLiteDatabase db = bdUsers.getWritableDatabase();
+                    if(db != null) {
+                        //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+                        //String[] arg = new String[]{data.getDataString(),getIntent().getExtras().getString("user")};
+                        //db.rawQuery(" UPDATE usuaris SET image=? WHERE user=? ", arg);
+                        db.execSQL("UPDATE usuaris SET address='"+ street.toString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
+                    }
+                    db.close();
+                }
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
+        };
+    }
+
+    @Override
+    public void searchGPS(){
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
     @Override
@@ -196,4 +261,6 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
             //Picasso.with(getApplicationContext()).loa
         }
     }
+
+
 }

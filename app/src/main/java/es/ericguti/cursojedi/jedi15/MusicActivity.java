@@ -1,14 +1,19 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,8 +26,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class MusicActivity extends ActionBarActivity implements View.OnClickListener{
-    //TextView text;
+public class MusicActivity extends ActionBarActivity implements View.OnClickListener, MyMusicAdapter.Callback{
+    public MusicBoundService mService;
+    boolean mBound = false;
     int[] viewCoords = new int[2];
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayout;
@@ -52,7 +58,37 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
         //El adapter se encarga de  adaptar un objeto definido en el código a una vista en xml
         //según la estructura definida.
         //Asignamos nuestro custom Adapter
-        mRecyclerView.setAdapter(new MyMusicAdapter(songs));
+        mRecyclerView.setAdapter(new MyMusicAdapter(songs, this));
+
+
+
+
+
+
+
+        connection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.v("MUSIC","osc");
+                MusicBoundService.MyBinder binder = (MusicBoundService.MyBinder) service;
+                mService = binder.getService();
+                mBound = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.v("MUSIC","osd");
+                mBound = false;
+            }
+        };
+
+
+        // Se vincula al LocalService
+        Intent intent = new Intent(MusicActivity.this, MusicBoundService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
+
+
 
 
 
@@ -75,21 +111,26 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
 
                 //text.setText(play.getMeasuredWidth() + " " + play.getMeasuredHeight());
         play.setOnTouchListener(new View.OnTouchListener() {
-        @Override
-        public boolean onTouch (View v, MotionEvent event) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-            int touchX = (int) event.getX();
-            int touchY = (int) event.getY();
-            imageX = touchX - viewCoords[0]; // viewCoords[0] is the X coordinate
-            imageY = touchY - viewCoords[1]; // viewCoords[1] is the y coordinate
-            //text.setText(imageX + " - " + imageY);
-            finalHeight = play.getMeasuredHeight();
-            finalWidth = play.getMeasuredWidth();
-            return false;
+                int touchX = (int) event.getX();
+                int touchY = (int) event.getY();
+                imageX = touchX - viewCoords[0]; // viewCoords[0] is the X coordinate
+                imageY = touchY - viewCoords[1]; // viewCoords[1] is the y coordinate
+                //text.setText(imageX + " - " + imageY);
+                finalHeight = play.getMeasuredHeight();
+                finalWidth = play.getMeasuredWidth();
+                return false;
             }
         });
         play.setOnClickListener(this);
+
+
+
     }
+
+    private ServiceConnection connection;
 
     private void cargarMusica() {
         ContentResolver musicResolver = getContentResolver();
@@ -148,14 +189,24 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY < finalHeight/2) {
-            MyMusicAdapter.startPauseMusic();
+            mService.startPauseMusic();
         }
         if(imageX>finalWidth/3 && imageX<(finalWidth/3)*2 && imageY > finalHeight/2) {
 
             Intent intent = new Intent(getApplicationContext(), YodaActivity.class);
             startActivity(intent);
         }
-        else if(imageX<finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) MyMusicAdapter.startMusic(MyMusicAdapter.posActual-1);//Toast.makeText(v.getContext(), "retroceder", Toast.LENGTH_SHORT).show();
-        else if(imageX>finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) MyMusicAdapter.startMusic(MyMusicAdapter.posActual+1);//Toast.makeText(v.getContext(), "avanzar", Toast.LENGTH_SHORT).show();
+        else if(imageX<finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) mService.startMusic(mService.posActual-1);//Toast.makeText(v.getContext(), "retroceder", Toast.LENGTH_SHORT).show();
+        else if(imageX>finalWidth/2 && imageY>finalHeight/3 && imageY<(finalHeight/3)*2) mService.startMusic(mService.posActual+1);//Toast.makeText(v.getContext(), "avanzar", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void click(int position) {
+        Log.v("MUSIC","click");
+        if(mBound) {
+            Log.v("MUSIC","is bound");
+            mService.click(position);
+        }
+        //unbindService(connection);
     }
 }

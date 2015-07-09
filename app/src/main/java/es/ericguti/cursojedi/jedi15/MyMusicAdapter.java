@@ -1,5 +1,7 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -18,15 +20,21 @@ import java.util.ArrayList;
  */
 public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterViewHolder> {
     static ArrayList<Song> songs;
-    static MediaPlayer mediaPlayer;
-    static String actual="";
-    static int posActual = 0;
+    //static MediaPlayer mediaPlayer;
+    //static String actual="";
+    //static int posActual = 0;
+    MusicActivity mActivity;
+    private Callback listener;
+    int positionClick = 0;
 
-    MyMusicAdapter(ArrayList<Song> songs){
+    MyMusicAdapter(ArrayList<Song> songs, MusicActivity m){
         this.songs = songs;
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        listener = (Callback) m;
+        this.mActivity = m;
+        //mediaPlayer = new MediaPlayer();
+        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
+
 
     @Override
     public MyMusicAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,7 +45,7 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
         return new AdapterViewHolder(view);
     }
 
-    public static void startMusic(int pos){
+    /*public static void startMusic(int pos){
         try {
             if(pos<1) pos = songs.size()-1;
             else if(pos>songs.size()-1) pos = 0;
@@ -52,9 +60,9 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public static void startPauseMusic(){
+    /*public static void startPauseMusic(){
         if(actual.equals("")) {
             MusicActivity.switchPlayPause(true);
             startMusic(posActual);
@@ -67,7 +75,7 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
             mediaPlayer.start();
             MusicActivity.switchPlayPause(true);
         }
-    }
+    }*/
 
     @Override
     public void onBindViewHolder(AdapterViewHolder holder, final int position) {
@@ -79,7 +87,7 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
                 //v.setBackgroundResource(R.drawable.carta);
                 //Toast.makeText(v.getContext(),songs.get(position).name , Toast.LENGTH_SHORT).show();
 
-                if(actual.equals("")) {
+               /* if(actual.equals("")) {
                     MusicActivity.switchPlayPause(true);
                     startMusic(position);
                 }
@@ -97,7 +105,8 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
                 else {
                     MusicActivity.switchPlayPause(true);
                     startMusic(position);
-                }
+                }*/
+                listener.click(position);
                 notifyDataSetChanged();
             }
         };
@@ -125,5 +134,9 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
         */
 
 
+    }
+
+    public static interface Callback {
+        public void click(int position);
     }
 }
