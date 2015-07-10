@@ -20,13 +20,11 @@ import java.util.ArrayList;
  */
 public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterViewHolder> {
     static ArrayList<Song> songs;
-    MusicActivity mActivity;
     private Callback listener;
 
     MyMusicAdapter(ArrayList<Song> songs, MusicActivity m){
         this.songs = songs;
         listener = (Callback) m;
-        this.mActivity = m;
     }
 
     @Override
@@ -55,6 +53,8 @@ public class MyMusicAdapter extends RecyclerView.Adapter<MyMusicAdapter.AdapterV
     public int getItemCount() {
         return songs.size();
     }
+
+
 
     //Definimos una clase viewholder que funciona como adapter para
     public class AdapterViewHolder extends RecyclerView.ViewHolder {

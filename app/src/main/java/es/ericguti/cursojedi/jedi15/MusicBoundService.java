@@ -32,6 +32,12 @@ public class MusicBoundService extends Service {
     public IBinder onBind(Intent intent) {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                startMusic(posActual+1);
+            }
+        });
         return mBinder;
     }
 

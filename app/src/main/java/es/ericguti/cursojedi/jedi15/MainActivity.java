@@ -128,6 +128,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     dialogo.show(fragmentManager, "tagAlerta");
                 }
             }
+            c.close();
         }
     }
 
