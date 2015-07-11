@@ -1,6 +1,7 @@
 package es.ericguti.cursojedi.jedi15;
 
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -8,6 +9,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.TextSwitcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,10 +20,11 @@ import java.util.ArrayList;
 public class MusicBoundService extends Service {
 
     private final IBinder mBinder = new MyBinder();
-    static String actual="";
-    static int posActual = 0;
-    static ArrayList<Song> songs;
-    static MediaPlayer mediaPlayer;
+    String actual="";
+    int posActual = 0;
+    ArrayList<Song> songs;
+    MediaPlayer mediaPlayer;
+    private callbackMusic callback;
 
     @Override
     public void onDestroy() {
@@ -49,7 +52,7 @@ public class MusicBoundService extends Service {
 
 
 
-    public static void startMusic(int pos){
+    public void startMusic(int pos){
         try {
             if(pos<1) pos = songs.size()-1;
             else if(pos>songs.size()-1) pos = 0;
@@ -64,44 +67,49 @@ public class MusicBoundService extends Service {
         }
     }
 
-    public static void startPauseMusic(){
+    public void startPauseMusic(){
         if(actual.equals("")) {
-            MusicActivity.switchPlayPause(true);
+            callback.switchPlayPause(true);
             startMusic(posActual);
         }
         if(mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
-            MusicActivity.switchPlayPause(false);
+            callback.switchPlayPause(false);
         }
         else {
             mediaPlayer.start();
-            MusicActivity.switchPlayPause(true);
+            callback.switchPlayPause(true);
         }
     }
 
     public void click(final int position){
         if(actual.equals("")) {
-            MusicActivity.switchPlayPause(true);
+            callback.switchPlayPause(true);
             startMusic(position);
         }
         else if (actual.equals(songs.get(position).name)){
             if(mediaPlayer.isPlaying()) {
                 mediaPlayer.pause();
-                MusicActivity.switchPlayPause(false);
+                callback.switchPlayPause(false);
             }
             else {
                 mediaPlayer.start();
-                MusicActivity.switchPlayPause(true);
+                callback.switchPlayPause(true);
             }
         }
         else {
-            MusicActivity.switchPlayPause(true);
+            callback.switchPlayPause(true);
             startMusic(position);
         }
     }
 
-    public void loadSong(ArrayList<Song> s){
+    public void loadSong(ArrayList<Song> s, Activity activity){
         songs = s;
+        callback = (callbackMusic) activity;
+    }
+
+    public static interface callbackMusic {
+        void switchPlayPause(boolean b);
     }
 }
 

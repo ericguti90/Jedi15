@@ -18,27 +18,34 @@
         android:layout_alignParentEnd="true"
         android:layout_weight="1" />
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView49"
+        android:src="@drawable/icon_perfil"
+        android:clickable="true"
+        android:layout_weight="1"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/linearLayout4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/imageView30"
-        android:gravity="center_horizontal">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/imageView49"
-            android:src="@drawable/icon_perfil"
-            android:layout_below="@+id/imageView30"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="44dp"
-            android:clickable="true"
-            android:layout_weight="1" />
+        android:layout_toRightOf="@+id/imageView49"
+        android:layout_toEndOf="@+id/imageView49"
+        android:id="@+id/linearLayout4">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="Eric Gutierrez Llopis"
             android:id="@+id/textView6"
             android:layout_below="@+id/imageView49"
@@ -48,27 +55,35 @@
             android:textSize="30dp"
             android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/direccion_tag"
-            android:id="@+id/textView7"
-            android:layout_below="@+id/textView6"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:editable="true"
-            android:layout_weight="1" />
+            android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/imageView52"
-            android:src="@drawable/add_icon"
-            android:clickable="true"
-            android:layout_below="@+id/textView7"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView52"
+                android:src="@drawable/add_icon"
+                android:clickable="true"
+                android:layout_below="@+id/textView7"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/direccion_tag"
+                android:id="@+id/textView7"
+                android:layout_below="@+id/textView6"
+                android:layout_centerHorizontal="true"
+                android:editable="true"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"

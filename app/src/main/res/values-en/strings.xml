@@ -23,4 +23,6 @@
     <string name="llamar">Call</string>
     <string name="navegador">Browser</string>
     <string name="newuser">User created</string>
+    <string name="fraseYoda1">If you see the ranking want to,</string>
+    <string name="fraseYoda2">to first play, you have</string>
 </resources>

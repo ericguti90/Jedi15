@@ -31,4 +31,6 @@
     <string name="llamar">Llamar</string>
     <string name="navegador">Navegador</string>
     <string name="newuser">Usuario creado</string>
+    <string name="fraseYoda1">Si ver ranking querer,</string>
+    <string name="fraseYoda2">jugar primero tener</string>
 </resources>

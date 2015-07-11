@@ -80,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editText"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +99,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText2" />
+                android:id="@+id/editText2"
+                android:password="true"
+                android:singleLine="true" />
         </LinearLayout>
 
     </LinearLayout>

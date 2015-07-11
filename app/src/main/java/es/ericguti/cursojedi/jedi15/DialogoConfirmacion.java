@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -30,7 +31,13 @@ public class DialogoConfirmacion extends DialogFragment {
                         db.close();
                         Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.newuser, Toast.LENGTH_LONG);
                         toast.show();
+                        ((MainActivity) getActivity()).saveUser(user);
+                        getActivity().finish();
                         dialog.cancel();
+                        Intent intent = new Intent(getActivity().getApplicationContext(), MenuActivity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
+
                     }
                 })
                 .setNegativeButton(R.string.Cancelar, new DialogInterface.OnClickListener() {

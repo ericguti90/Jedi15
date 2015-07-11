@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.MediaStore;
@@ -14,19 +15,24 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 
 
-public class MusicActivity extends ActionBarActivity implements View.OnClickListener, MyMusicAdapter.Callback{
+public class MusicActivity extends ActionBarActivity implements View.OnClickListener, MyMusicAdapter.Callback, MusicBoundService.callbackMusic{
     public MusicBoundService mService;
     boolean mBound = false;
     int[] viewCoords = new int[2];
@@ -39,6 +45,8 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
     static boolean playMusic = false;
     boolean loadMusic = false;
     private ServiceConnection connection;
+    TextSwitcher mSwitcher;
+    Animation in, out, fadeIN, fadeOUT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +67,6 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
         ServiceConnection connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.v("MUSIC","osc");
                 MusicBoundService.MyBinder binder = (MusicBoundService.MyBinder) service;
                 mService = binder.getService();
                 mBound = true;
@@ -67,7 +74,6 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Log.v("MUSIC","osd");
                 mBound = false;
             }
         };
@@ -91,6 +97,31 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
             }
         });
         play.setOnClickListener(this);
+
+        mSwitcher = (TextSwitcher) findViewById(R.id.textSwitcher);
+        // Declare the in and out animations and initialize them
+        in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        out = AnimationUtils.loadAnimation(this,android.R.anim.slide_out_right);
+        // Set the ViewFactory of the TextSwitcher that will create TextView object when asked
+        mSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+
+            public View makeView() {
+                // TODO Auto-generated method stub
+                // create new textView and set the properties like clolr, size etc
+                TextView myText = new TextView(MusicActivity.this);
+                myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                myText.setTextSize(30);
+                myText.setTextColor(Color.parseColor("#ff007fcc"));
+                return myText;
+            }
+        });
+        // set the animation type of textSwitcher
+        mSwitcher.setInAnimation(in);
+        mSwitcher.setOutAnimation(out);
+        fadeIN = AnimationUtils.loadAnimation(this, R.anim.abc_fade_in);
+        fadeIN.setDuration(2000);
+        fadeOUT = AnimationUtils.loadAnimation(this, R.anim.abc_fade_out);
+        fadeOUT.setDuration(2000);
     }
 
     private void cargarMusica() {
@@ -109,11 +140,19 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
         }
     }
 
-
-    public static void switchPlayPause(boolean music){
+    @Override
+    public void switchPlayPause(boolean music){
+        if (music) {
+            play.setImageResource(R.drawable.menu_pause);
+            if(!playMusic) mSwitcher.startAnimation(fadeIN);
+            mSwitcher.setText(songs.get(mService.posActual).name);
+        }
+        else {
+            play.setImageResource(R.drawable.menu_play);
+            mSwitcher.startAnimation(fadeOUT);
+            mSwitcher.setText("");
+        }
         playMusic = music;
-        if (music) play.setImageResource(R.drawable.menu_pause);
-        else play.setImageResource(R.drawable.menu_play);
     }
 
     @Override
@@ -132,7 +171,7 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(mBound && !loadMusic) {
-            mService.loadSong(songs);
+            mService.loadSong(songs, this);
             loadMusic=true;
         }
         if(loadMusic) {
@@ -142,10 +181,14 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
             if (imageX > finalWidth / 3 && imageX < (finalWidth / 3) * 2 && imageY > finalHeight / 2) {
                 Intent intent = new Intent(getApplicationContext(), YodaActivity.class);
                 startActivity(intent);
-            } else if (imageX < finalWidth / 2 && imageY > finalHeight / 3 && imageY < (finalHeight / 3) * 2)
+            } else if (imageX < finalWidth / 2 && imageY > finalHeight / 3 && imageY < (finalHeight / 3) * 2) {
                 mService.startMusic(mService.posActual - 1);
-            else if (imageX > finalWidth / 2 && imageY > finalHeight / 3 && imageY < (finalHeight / 3) * 2)
+                switchPlayPause(true);
+            }
+            else if (imageX > finalWidth / 2 && imageY > finalHeight / 3 && imageY < (finalHeight / 3) * 2) {
                 mService.startMusic(mService.posActual + 1);
+                switchPlayPause(true);
+            }
         }
     }
 
@@ -154,7 +197,7 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
         if(mBound) {
             if(loadMusic) mService.click(position);
             else {
-                mService.loadSong(songs);
+                mService.loadSong(songs, this);
                 loadMusic = true;
                 mService.click(position);
             }

@@ -21,7 +21,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:gravity="center"
         android:layout_marginBottom="5dp">
 
@@ -38,7 +38,8 @@
             android:id="@+id/textView5"
             android:textColor="#ff092ee3"
             android:textSize="30dp"
-            android:editable="true" />
+            android:editable="true"
+            android:paddingBottom="5dp" />
     </LinearLayout>
 
     <LinearLayout
