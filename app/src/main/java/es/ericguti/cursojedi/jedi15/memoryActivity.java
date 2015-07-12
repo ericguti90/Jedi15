@@ -1,6 +1,5 @@
 package es.ericguti.cursojedi.jedi15;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +68,7 @@ public class memoryActivity extends ActionBarActivity implements View.OnClickLis
         long seed = System.nanoTime();
         Collections.shuffle(cards, new Random(seed));
         mp = MediaPlayer.create(getApplicationContext(), R.raw.sable);
-        mp2 = MediaPlayer.create(getApplicationContext(), R.raw.sable_off);
+        mp2 = MediaPlayer.create(getApplicationContext(), R.raw.sable2);
     }
 
     @Override
