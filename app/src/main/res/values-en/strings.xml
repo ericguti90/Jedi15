@@ -25,4 +25,10 @@
     <string name="newuser">User created</string>
     <string name="fraseYoda1">If you see the ranking want to,</string>
     <string name="fraseYoda2">to first play, you have</string>
+    <string name="title_activity_calculadora">Jedi 15 - Calculator</string>
+    <string name="title_activity_music">Jedi 15 - Music</string>
+    <string name="title_activity_perfil">Jedi 15 - Profile</string>
+    <string name="title_activity_yoda">Jedi 15 - Easter egg</string>
+    <string name="confirm">Confirmation</string>
+    <string name="BorrarRanking">You want to delete the ranking?</string>
 </resources>

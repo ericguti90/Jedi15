@@ -5,16 +5,16 @@
     <string name="action_settings">Herramientas</string>
     <string name="usuario_tag">Usuario:</string>
     <string name="contra_tag">Contraseña:</string>
-    <string name="title_activity_menu">MenuActivity</string>
-    <string name="title_activity_calculadora">CalculadoraActivity</string>
-    <string name="title_activity_perfil">PerfilActivity</string>
-    <string name="title_activity_music">MusicActivity</string>
-    <string name="title_activity_memory">memoryActivity</string>
-    <string name="title_activity_ranking">RankingActivity</string>
+    <string name="title_activity_menu" translatable="false">Jedi 15 - Menu</string>
+    <string name="title_activity_calculadora">Jedi 15 - Calculadora</string>
+    <string name="title_activity_perfil">Jedi 15 - Perfil</string>
+    <string name="title_activity_music">Jedi 15 - Musica</string>
+    <string name="title_activity_memory" translatable="false">Jedi 15 - Memory</string>
+    <string name="title_activity_ranking" translatable="false">Jedi 15 - Ranking</string>
     <string name="direccion_tag">Dirección</string>
-    <string name="title_activity_address_notification">AddressNotification</string>
+    <string name="title_activity_address_notification" translatable="false">AddressNotification</string>
     <string name="direccion_info">Introduzca su dirección</string>
-    <string name="title_activity_yoda">YodaActivity</string>
+    <string name="title_activity_yoda">Jedi 15 - Huevo de pascua</string>
     <string name="restart">Reiniciar</string>
     <string name="sesion">Cerrar sesión</string>
     <string name="mejorPuntuacion">Mejor puntuación:</string>
@@ -32,5 +32,7 @@
     <string name="navegador">Navegador</string>
     <string name="newuser">Usuario creado</string>
     <string name="fraseYoda1">Si ver ranking querer,</string>
-    <string name="fraseYoda2">jugar primero tener</string>
+    <string name="fraseYoda2">jugar primero tienes</string>
+    <string name="confirm">Confirmación</string>
+    <string name="BorrarRanking">¿Deseas borrar el ranking?</string>
 </resources>

@@ -1,7 +1,13 @@
 package es.ericguti.cursojedi.jedi15;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,16 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
-public class RankingActivity extends ActionBarActivity {
+public class RankingActivity extends ActionBarActivity implements ConfirmacionRanking.borrarRankingI {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayout;
     private boolean mRanking = true;
+    ConfirmacionRanking dialogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +78,23 @@ public class RankingActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            MyBD bdUsers = new MyBD(this);
-            SQLiteDatabase db = bdUsers.getWritableDatabase();
-            if(db != null) db.execSQL("DELETE FROM ranking");
-            db.close();
-            recreate();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialogo = new ConfirmacionRanking();
+            dialogo.show(fragmentManager, "tagAlerta");
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void borrarRanking() {
+        MyBD bdUsers = new MyBD(getApplicationContext());
+        SQLiteDatabase db = bdUsers.getWritableDatabase();
+        if (db != null) db.execSQL("DELETE FROM ranking");
+        db.close();
+        dialogo.dismiss();
+        recreate();
+    }
 }
+
+

@@ -24,5 +24,11 @@
     <string name="navegador">Navegador</string>
     <string name="newuser">Usuari creat</string>
     <string name="fraseYoda1">Si vuere ranking voler,</string>
-    <string name="fraseYoda2">jugar primer tindre</string>
+    <string name="fraseYoda2">jugar primer tens</string>
+    <string name="title_activity_calculadora">Jedi 15 - Calculadora</string>
+    <string name="title_activity_music">Jedi 15 - Musica</string>
+    <string name="title_activity_perfil">Jedi 15 - Perfil</string>
+    <string name="title_activity_yoda">Jedi 15 - Ou de pascua</string>
+    <string name="confirm">Confirmació</string>
+    <string name="BorrarRanking">Desitges esborrar el ranking?</string>
 </resources>
