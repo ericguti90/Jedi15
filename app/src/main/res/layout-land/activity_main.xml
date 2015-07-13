@@ -50,29 +50,32 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Login"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:weightSum="1"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
 
             <TextView
-                android:layout_width="115dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/usuario_tag"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView2"
+                android:gravity="right" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText"
                 android:singleLine="true" />
@@ -82,33 +85,53 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/contra_tag"
-                android:id="@+id/textView3" />
+                android:id="@+id/textView3"
+                android:gravity="right" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText2"
                 android:password="true"
                 android:singleLine="true" />
         </LinearLayout>
 
-        <ImageView
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp">
+
+        <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/twitter_login_button"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView2"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/login"
-            android:clickable="true"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp" />
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView2"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/login"
+                android:clickable="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1" />
 
     </LinearLayout>
+
+</LinearLayout>
 

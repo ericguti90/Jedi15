@@ -3,7 +3,6 @@ package es.ericguti.cursojedi.jedi15;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
@@ -16,10 +15,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
 import java.util.Locale;
-
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "fSzqFJ23GN4Aj3Of1yFrsERTC";
+    private static final String TWITTER_SECRET = "cwmp6K6eJTSKEaoPAluLnyUoGnkI2U650VnI83Had4WuaTRqy0";
+    private TwitterLoginButton loginButton;
+
     TextView user, pass;
     EditText userIN, passIN;
 
@@ -135,6 +147,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
         checkUser();
         user = (TextView) findViewById(R.id.textView2);
@@ -150,6 +164,51 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         cat.setOnClickListener(this);
         eng.setOnClickListener(this);
         loadLocale();
+        loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                // Do something with result, which provides a TwitterSession for making API calls
+
+                MyBD bdUsers = new MyBD(getApplicationContext());
+                SQLiteDatabase db = bdUsers.getWritableDatabase();
+                if(db != null){
+                    //db.execSQL("INSERT INTO usuaris VALUES ('eric1','eric','plaza','img')");
+                    String[] arg = new String[] {result.data.getUserName()};
+                    Cursor c = db.rawQuery(" SELECT user FROM usuaris WHERE user=? ", arg);
+                    if (c.moveToFirst()) {
+                            db.close();
+                            saveUser(result.data.getUserName());
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            intent.putExtra("user",result.data.getUserName().toString());
+                            startActivity(intent);
+                            finish();
+                    }
+                    else {
+                        //crear usuario
+                        db.execSQL("INSERT INTO usuaris VALUES ('" + result.data.getUserName() + "','" + result.data.getUserId() + "','','')");
+                        db.close();
+                        saveUser(result.data.getUserName());
+                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                        intent.putExtra("user", result.data.getUserName().toString());
+                        startActivity(intent);
+                        finish();
+                    }
+                    c.close();
+                }
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                // Do something on failure
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

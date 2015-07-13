@@ -53,6 +53,9 @@
             android:label="@string/title_activity_yoda" >
         </activity>
         <service android:name=".MusicBoundService" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="49626625fc81739bd688fb0e1838b6c17c735c36" />
     </application>
 
 </manifest>
