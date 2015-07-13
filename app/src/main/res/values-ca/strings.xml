@@ -31,4 +31,6 @@
     <string name="title_activity_yoda">Jedi 15 - Ou de pascua</string>
     <string name="confirm">Confirmació</string>
     <string name="BorrarRanking">Desitges esborrar el ranking?</string>
+    <string name="telefono">El telèfon</string>
+    <string name="noExist">no existeix</string>
 </resources>

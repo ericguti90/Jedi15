@@ -35,4 +35,6 @@
     <string name="fraseYoda2">jugar primero tienes</string>
     <string name="confirm">Confirmación</string>
     <string name="BorrarRanking">¿Deseas borrar el ranking?</string>
+    <string name="telefono">El teléfono</string>
+    <string name="noExist">no existe</string>
 </resources>

@@ -31,4 +31,6 @@
     <string name="title_activity_yoda">Jedi 15 - Easter egg</string>
     <string name="confirm">Confirmation</string>
     <string name="BorrarRanking">You want to delete the ranking?</string>
+    <string name="telefono">Phone</string>
+    <string name="noExist">does not exist</string>
 </resources>

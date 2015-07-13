@@ -4,19 +4,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CalculadoraActivity extends ActionBarActivity implements View.OnClickListener {
-    double x = 0;
-    double y = 0;
+    Double x = Double.valueOf(0);
+    Double y = Double.valueOf(0);
     int op = 0;
     boolean primer = true;
+    boolean numSelect = false;
     TextView result;
 
     public void operation(){
@@ -26,84 +29,128 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
             case 3: x /= y; break;
             case 4: x *= y; break;
         }
-        y = 0;
+        y = Double.valueOf(0);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageView26: //num0
+                numSelect = true;
                 if(primer) {x *= 10; result.setText(String.valueOf(x));}
                 else {y *= 10; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView21: //num1
+                numSelect = true;
                 if(primer) {x = (x*10)+1; result.setText(String.valueOf(x));}
                 else {y = (y*10)+1; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView22: //num2
+                numSelect = true;
                 if(primer) {x = (x*10)+2; result.setText(String.valueOf(x));}
                 else {y = (y*10)+2; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView23: //num3
+                numSelect = true;
                 if(primer) {x = (x*10)+3; result.setText(String.valueOf(x));}
                 else {y = (y*10)+3; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView17: //num4
+                numSelect = true;
                 if(primer) {x = (x*10)+4; result.setText(String.valueOf(x));}
                 else {y = (y*10)+4; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView18: //num5
+                numSelect = true;
                 if(primer) {x = (x*10)+5; result.setText(String.valueOf(x));}
                 else {y = (y*10)+5; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView19: //num6
+                numSelect = true;
                 if(primer) {x = (x*10)+6; result.setText(String.valueOf(x));}
                 else {y = (y*10)+6; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView13: //num7
+                numSelect = true;
                 if(primer) {x = (x*10)+7; result.setText(String.valueOf(x));}
                 else {y = (y*10)+7; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView14: //num8
+                numSelect = true;
                 if(primer) {x = (x*10)+8; result.setText(String.valueOf(x));}
                 else {y = (y*10)+8; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView15: //num9
+                numSelect = true;
                 if(primer) {x = (x*10)+9; result.setText(String.valueOf(x));}
                 else {y = (y*10)+9; result.setText(String.valueOf(y));}
                 break;
             case R.id.imageView25: //sum
-                if(primer) primer = false;
-                else operation();
+                if(numSelect) {
+                    if (primer) primer = false;
+                    else {
+                        operation();
+                        result.setText(String.valueOf(x));
+                    }
+                    numSelect = false;
+                }
                 op = 1;
-                result.setText(String.valueOf(x));
                 break;
             case R.id.imageView27: //sub
-                if(primer) primer = false;
-                else operation();
-                result.setText(String.valueOf(x));
+                if(numSelect) {
+                    if(primer) primer = false;
+                    else {
+                        operation();
+                        result.setText(String.valueOf(x));
+                    }
+                    numSelect = false;
+                }
                 op = 2;
                 break;
             case R.id.imageView20: //div
-                if(primer) primer = false;
-                else operation();
-                result.setText(String.valueOf(x));
+                if(numSelect) {
+                    if(primer) primer = false;
+                    else {
+                        operation();
+                        result.setText(String.valueOf(x));
+                    }
+                    numSelect = false;
+                }
                 op = 3;
                 break;
             case R.id.imageView16: //mul
-                if(primer) primer = false;
-                else operation();
-                result.setText(String.valueOf(x));
+                if(numSelect){
+                    if(primer) primer = false;
+                    else {
+                        operation();
+                        result.setText(String.valueOf(x));
+                    }
+                    numSelect = false;
+                }
                 op = 4;
                 break;
             case R.id.imageView28: //eq
-                operation();
+                if(!primer && numSelect) {
+                    operation();
+                    numSelect = false;
+                }
+                if(x.isNaN() || x.isInfinite()) {
+                    primer = true;
+                    x = Double.valueOf(0);
+                    y = Double.valueOf(0);
+                    numSelect = false;
+                    if(x.isNaN())(Toast.makeText(getApplicationContext(),
+                                    "Num Error: infinity", Toast.LENGTH_SHORT)).show();
+                    else (Toast.makeText(getApplicationContext(),
+                            "Num Error: /0", Toast.LENGTH_SHORT)).show();
+                }
                 result.setText(String.valueOf(x));
                 break;
             case R.id.imageView24: //del
+                numSelect = false;
                 primer = true;
-                x = 0;
-                y = 0;
+                x = Double.valueOf(0);
+                y = Double.valueOf(0);
                 result.setText(String.valueOf(x));
                 break;
         }
