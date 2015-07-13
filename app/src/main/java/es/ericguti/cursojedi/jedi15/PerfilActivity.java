@@ -6,29 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.provider.MediaStore;
 
+
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +31,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class PerfilActivity extends FragmentActivity implements View.OnClickListener, AddressNotification.Callback{
+public class PerfilActivity extends FragmentActivity implements View.OnClickListener, AddressNotification.Callback, PhotoDialog.imageI {
     TextView dir,name,points;
     ImageView img;
     List<Address> addressList;
@@ -147,8 +135,15 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.imageView49:
-                Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, 2);
+                //Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //startActivityForResult(i, 2);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                PhotoDialog dialogo1 = new PhotoDialog();
+                dialogo1.show(fragmentManager, "tagAlerta");
+
+                //FragmentManager fragmentManager = getSupportFragmentManager();
+                //PhotoDialog dialogo1 = new PhotoDialog();
+                //dialogo1.show(fragmentManager, "tagAlerta");
                 break;
             case R.id.imageView52:
                 AddressNotification dialogo = new AddressNotification();
@@ -176,12 +171,24 @@ public class PerfilActivity extends FragmentActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
+        if (requestCode == 2 || requestCode == 0 && resultCode == RESULT_OK && null != data) {
             Picasso.with(getApplicationContext()).load(data.getDataString()).error(R.drawable.icon_perfil).resize(100, 100).transform(new CircleTransform()).into(img);
             MyBD bdUsers = new MyBD(this);
             SQLiteDatabase db = bdUsers.getWritableDatabase();
             if(db != null) db.execSQL("UPDATE usuaris SET image='"+ data.getDataString() +"' WHERE user='"+ getIntent().getExtras().getString("user") +"'");
             db.close();
+        }
+    }
+
+    @Override
+    public void intentImage(int type) {
+        if(type == 0){
+            Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, 2);
+        }
+        else {
+            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(takePicture, 0);
         }
     }
 }
