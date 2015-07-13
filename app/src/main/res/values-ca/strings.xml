@@ -33,4 +33,8 @@
     <string name="BorrarRanking">Desitges esborrar el ranking?</string>
     <string name="telefono">El telèfon</string>
     <string name="noExist">no existeix</string>
+    <string name="selectPhoto">Obtindre imatge de la...?</string>
+    <string name="FotoPerfil">Foto de perfil</string>
+    <string name="galeria">Galeria</string>
+    <string name="camara">Camara</string>
 </resources>

@@ -20,15 +20,15 @@ public class PhotoDialog extends DialogFragment {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(getActivity());
 
-        builder.setMessage("¿Confirma la acción seleccionada?")
-                .setTitle("Confirmacion")
-                .setPositiveButton("Galeria", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.selectPhoto)
+                .setTitle(R.string.FotoPerfil)
+                .setPositiveButton(R.string.galeria, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ((imageI) getActivity()).intentImage(0);
                         dialog.cancel();
                     }
                 })
-                .setNegativeButton("Camara", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.camara, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ((imageI) getActivity()).intentImage(1);
                         dialog.cancel();

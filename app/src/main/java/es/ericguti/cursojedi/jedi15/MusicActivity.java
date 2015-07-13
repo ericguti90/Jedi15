@@ -46,6 +46,7 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
     boolean loadMusic = false;
     private ServiceConnection connection;
     TextSwitcher mSwitcher;
+    String switcher;
     Animation in, out, fadeIN, fadeOUT;
 
     @Override
@@ -146,11 +147,13 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
             play.setImageResource(R.drawable.menu_pause);
             if(!playMusic) mSwitcher.startAnimation(fadeIN);
             mSwitcher.setText(songs.get(mService.posActual).name);
+            switcher = songs.get(mService.posActual).name;
         }
         else {
             play.setImageResource(R.drawable.menu_play);
             mSwitcher.startAnimation(fadeOUT);
             mSwitcher.setText("");
+            switcher = "";
         }
         playMusic = music;
     }
@@ -208,13 +211,18 @@ public class MusicActivity extends ActionBarActivity implements View.OnClickList
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("play", playMusic);
+        outState.putString("switcher", switcher);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         playMusic = savedInstanceState.getBoolean("play");
-        if(playMusic) play.setImageResource(R.drawable.menu_pause);
+        if(playMusic) {
+            play.setImageResource(R.drawable.menu_pause);
+            switcher = savedInstanceState.getString("switcher");
+            mSwitcher.setText(savedInstanceState.getString("switcher"));
+        }
         else play.setImageResource(R.drawable.menu_play);
     }
 }

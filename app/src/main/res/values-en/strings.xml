@@ -33,4 +33,8 @@
     <string name="BorrarRanking">You want to delete the ranking?</string>
     <string name="telefono">Phone</string>
     <string name="noExist">does not exist</string>
+    <string name="selectPhoto">Get picture of the...?</string>
+    <string name="FotoPerfil">Profile picture</string>
+    <string name="galeria">Gallery</string>
+    <string name="camara">Camera</string>
 </resources>

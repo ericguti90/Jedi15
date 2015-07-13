@@ -38,7 +38,9 @@ public class MusicBoundService extends Service {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                startMusic(posActual+1);
+                posActual += 1;
+                startMusic(posActual);
+                callback.switchPlayPause(true);
             }
         });
         return mBinder;
@@ -83,6 +85,7 @@ public class MusicBoundService extends Service {
     }
 
     public void click(final int position){
+        posActual = position;
         if(actual.equals("")) {
             callback.switchPlayPause(true);
             startMusic(position);
