@@ -140,9 +140,9 @@ public class CalculadoraActivity extends ActionBarActivity implements View.OnCli
                     y = Double.valueOf(0);
                     numSelect = false;
                     if(x.isNaN())(Toast.makeText(getApplicationContext(),
-                                    "Num Error: infinity", Toast.LENGTH_SHORT)).show();
+                                    R.string.numInf, Toast.LENGTH_SHORT)).show();
                     else (Toast.makeText(getApplicationContext(),
-                            "Num Error: /0", Toast.LENGTH_SHORT)).show();
+                            R.string.div0, Toast.LENGTH_SHORT)).show();
                 }
                 result.setText(String.valueOf(x));
                 break;

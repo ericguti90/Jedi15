@@ -37,4 +37,6 @@
     <string name="FotoPerfil">Profile picture</string>
     <string name="galeria">Gallery</string>
     <string name="camara">Camera</string>
+    <string name="numInf">Error: infinite number</string>
+    <string name="div0">Error: impossible to divide by 0</string>
 </resources>
