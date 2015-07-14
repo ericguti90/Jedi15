@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         esp.setOnClickListener(this);
         cat.setOnClickListener(this);
         eng.setOnClickListener(this);
-        loadLocale();
+
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
@@ -196,6 +196,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     }
                     c.close();
                 }
+
             }
 
             @Override
@@ -203,6 +204,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 // Do something on failure
             }
         });
+        loadLocale();
     }
 
     @Override

@@ -16,8 +16,11 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.util.Locale;
+
 
 public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
+    MenuItem mi;
     @Override
     public void onClick(View v){
         Intent intent = null;
@@ -67,6 +70,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_menu, menu);
+        mi = (MenuItem) menu.findItem(R.id.action_settings);
         return true;
     }
 
@@ -93,12 +97,14 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    FloatingActionButton actionA, actionB, actionC;
+
 
     void createB(){
-
-        final View actionB = findViewById(R.id.action_b);
-
-        FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
+        //actionA = findViewById(R.id.action_a);
+        //actionB = findViewById(R.id.action_b);
+        //actionC = findViewById(R.id.action_c);
+        //FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
         //actionC.setTitle("Hide/Show Action above");
         //actionC.setOnClickListener(new View.OnClickListener() {
         //   @Override
@@ -111,12 +117,53 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 
 
 
-        final FloatingActionButton actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        actionB = (FloatingActionButton) findViewById(R.id.action_b);
+        actionC = (FloatingActionButton) findViewById(R.id.action_c);
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionA.setTitle("Action A clicked");
+                changeLang("ca");
             }
         });
+        actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeLang("es");
+            }
+        });
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeLang("en");
+            }
+        });
+    }
+
+    void updateTexts(){
+        actionA.setTitle(getString(R.string.catalan));
+        actionB.setTitle(getString(R.string.castellano));
+        actionC.setTitle(getString(R.string.ingles));
+        mi.setTitle(R.string.sesion);
+    }
+
+    public void changeLang(String lang) {
+        if (lang.equalsIgnoreCase("")) return;
+        Locale myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        updateTexts();
+    }
+
+    public void saveLocale(String lang)
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.apply();
     }
 }
