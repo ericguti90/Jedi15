@@ -39,4 +39,7 @@
     <string name="camara">Camera</string>
     <string name="numInf">Error: infinite number</string>
     <string name="div0">Error: impossible to divide by 0</string>
+    <string name="catalan">catalan</string>
+    <string name="castellano">spanish</string>
+    <string name="ingles">english</string>
 </resources>

@@ -43,4 +43,7 @@
     <string name="camara">Camara</string>
     <string name="numInf">Error: número infinito</string>
     <string name="div0">Error: imposible dividir entre 0</string>
+    <string name="catalan">catalán</string>
+    <string name="castellano">castellano</string>
+    <string name="ingles">inglés</string>
 </resources>
