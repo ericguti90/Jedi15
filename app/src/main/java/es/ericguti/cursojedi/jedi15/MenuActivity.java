@@ -71,6 +71,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_menu, menu);
         mi = (MenuItem) menu.findItem(R.id.action_settings);
+        loadLocale();
         return true;
     }
 
@@ -165,5 +166,13 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(langPref, lang);
         editor.apply();
+    }
+
+    public void loadLocale()
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
     }
 }

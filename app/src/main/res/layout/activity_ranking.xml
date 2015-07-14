@@ -40,7 +40,8 @@
             android:id="@+id/textView16"
             android:textColor="#ff007fcc"
             android:textSize="30dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -55,7 +56,8 @@
             android:id="@+id/textView11"
             android:textColor="#ff007fcc"
             android:textSize="30dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
 </RelativeLayout>
